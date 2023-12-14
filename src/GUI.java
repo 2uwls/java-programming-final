@@ -33,6 +33,7 @@ public class GUI extends JFrame {
     private ImageIcon defaultImg = new ImageIcon(GUI.class.getResource("/img/pinoNoteBg1.png"));
     private ImageIcon beginImg = new ImageIcon(GUI.class.getResource("/img/pinoNoteBgBegin.png"));
     private ArrayList<int[]> clickedButtons = new ArrayList();
+	private JTextArea textArea;
 
 
 	/**
@@ -57,16 +58,12 @@ public class GUI extends JFrame {
 	public GUI() {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 842, 456);
+		setBounds(100, 100, 842, 557);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
 		setContentPane(contentPane);
-		
-
-        
-        
         
 		JLabel lblNewJgoodiesLabel = DefaultComponentFactory.getInstance().createLabel("Get a Piano");
 		lblNewJgoodiesLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
@@ -76,7 +73,7 @@ public class GUI extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
-		panel.setBounds(16, 307, 723, 119);
+		panel.setBounds(16, 404, 723, 119);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -279,20 +276,28 @@ public class GUI extends JFrame {
 		panel_1.add(bpmLabel);
 		
 		
-		
 		JPanel panel_2 = new JPanel();
-		panel_2.setBounds(16, 46, 723, 228);
+		panel_2.setBounds(16, 143, 723, 228);
 		contentPane.add(panel_2);
 		panel_2.setLayout(null);
 		
 		JPanel panel_3 = new JPanel();
-		panel_3.setBounds(16, 273, 723, 35);
+		panel_3.setBounds(16, 370, 723, 35);
 		contentPane.add(panel_3);
 		panel_3.setLayout(new GridLayout(1, 0, 0, 0));
 		
-		String[] labels = {"C4", "C#4", "D4", "D#4", "E4", "F4", "F#4", "G4", "G#4", "A4", "A#4", "B4", 
-                "C5", "C#5", "D5", "D#5", "E5", "F5", "F#5", "G5", "G#5", "A5", "A#5", "B5", 
-                "C6", "C#6", "D6", "D#6", "E6", "F6", "F#6", "G6"};
+		JPanel panel_4 = new JPanel();
+		panel_4.setBounds(16, 59, 723, 82);
+		contentPane.add(panel_4);
+		panel_4.setLayout(null);
+		
+		textArea = new JTextArea();
+		textArea.setBounds(6, 5, 711, 71);
+		panel_4.add(textArea);
+		
+		String[] labels = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B", 
+                "C2", "C#2", "D2", "D#2", "E2", "F2", "F#2", "G2", "G#2", "A2", "A#2", "B2", 
+                "C3", "C#3", "D3", "D#3", "E3", "F3", "F#3", "G3"};
 
 		for (String label : labels) {
 		 panel_3.add(DefaultComponentFactory.getInstance().createLabel(label));
@@ -312,9 +317,6 @@ public class GUI extends JFrame {
             }
         }
 
-		
-
-		
 		toggleHandler handler = new toggleHandler();
 	    onOffBtn.addActionListener(handler);
 
@@ -360,12 +362,40 @@ public class GUI extends JFrame {
 	        clickedButtons.add(clickedInfo);
 	    }
 
-	    // Print clicked buttons information (for testing purposes)
-	    System.out.println("Clicked Buttons:");
-	    for (int[] info : clickedButtons) {
-	        System.out.println("Column: " + info[0] + ", Row: " + info[1]);
-	    }
+	    // Update textPane in panel_4
+	    updateTextPane();
 	}
+	
+	private void updateTextPane() {
+	    StringBuilder text = new StringBuilder();
+	    
+	    // Sort clickedButtons based on row in descending order
+	    clickedButtons.sort((a, b) -> Integer.compare(b[1], a[1]));
+
+	    // Iterate through clickedButtons and append corresponding note names to text
+	    for (int[] info : clickedButtons) {
+	        int col = info[0];
+	        int row = info[1];
+
+	        String noteName = getNoteName(col);
+	        text.append(noteName).append(" ");
+	    }
+
+	    // Update textPane with the generated text
+	    textArea.setText(text.toString());
+	}
+	
+	private String getNoteName(int col) {
+	    String[] labels = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B",
+	            "C2", "C#2", "D2", "D#2", "E2", "F2", "F#2", "G2", "G#2", "A2", "A#2", "B2",
+	            "C3", "C#3", "D3", "D#3", "E3", "F3", "F#3", "G3"};
+
+	    // Ensure col is within bounds
+	    col = Math.max(0, Math.min(col, labels.length - 1));
+
+	    return labels[col];
+	}
+
 
 	
 	private class toggleHandler implements ActionListener {
