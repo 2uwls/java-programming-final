@@ -32,8 +32,12 @@ public class GUI extends JFrame {
 	private JButton[][] buttons;
     private ImageIcon defaultImg = new ImageIcon(GUI.class.getResource("/img/pinoNoteBg1.png"));
     private ImageIcon beginImg = new ImageIcon(GUI.class.getResource("/img/pinoNoteBgBegin.png"));
-    private ArrayList<int[]> clickedButtons = new ArrayList();
+    private String[] clickedButtons = {"  ", "  ", "  ", "  ", "  ", "  ","  ","  ","  ","  "};
 	private JTextArea textArea;
+	private String[] labels = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B", 
+            "C2", "C#2", "D2", "D#2", "E2", "F2", "F#2", "G2", "G#2", "A2", "A#2", "B2", 
+            "C3", "C#3", "D3", "D#3", "E3", "F3", "F#3", "G3"};
+
 
 
 	/**
@@ -56,6 +60,7 @@ public class GUI extends JFrame {
 	 * Create the frame.
 	 */
 	public GUI() {
+		
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 842, 557);
@@ -295,9 +300,74 @@ public class GUI extends JFrame {
 		textArea.setBounds(6, 5, 711, 71);
 		panel_4.add(textArea);
 		
-		String[] labels = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B", 
-                "C2", "C#2", "D2", "D#2", "E2", "F2", "F#2", "G2", "G#2", "A2", "A#2", "B2", 
-                "C3", "C#3", "D3", "D#3", "E3", "F3", "F#3", "G3"};
+		JButton playBtn = new JButton("PLAY");
+		playBtn.setBounds(747, 219, 89, 46);
+		contentPane.add(playBtn);
+		
+//		playBtn.addActionListener(new ActionListener() {
+//		    @Override
+//		    public void actionPerformed(ActionEvent e) {
+//		        // Iterate through each row (beat)
+//		        for (int row = 0; row < 10; row++) {
+//		            String note = clickedButtons[row];
+//
+//		            // Check if the note is not an empty string
+//		            if (!note.trim().isEmpty()) {
+//		                // Play the note sound
+//		                playNoteSound(note);
+//		            }
+//
+//		            // Sleep for 1 second before playing the next note
+//		            try {
+//		                Thread.sleep(500);
+//		            } catch (InterruptedException ex) {
+//		                ex.printStackTrace();
+//		            }
+//		        }
+//		    }
+//
+//		    
+//
+//			
+//		});
+		
+		playBtn.addActionListener(new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		        // Check if already playing
+		        if (playBtn.getText().equals("PLAY")) {
+		            // Set playBtn text to "playing" and disable panel_2 buttons
+		            playBtn.setText("Playing");
+		            setPanel2ButtonsEnabled(false);
+		            
+
+		            // Iterate through each row (beat)
+		            for (int row = 0; row < 10; row++) {
+		                String note = clickedButtons[row];
+
+		                // Check if the note is not an empty string
+		                if (!note.trim().isEmpty()) {
+		                    // Play the note sound
+		                    playNoteSound(note);
+		                }
+
+		                // Sleep for 1 second before playing the next note
+		                try {
+		                    Thread.sleep(1000);
+		                } catch (InterruptedException ex) {
+		                    ex.printStackTrace();
+		                }
+		            }
+
+		            // After playing, set playBtn text to "PLAY" and enable panel_2 buttons
+		            playBtn.setText("PLAY");
+		            setPanel2ButtonsEnabled(true);
+		        }
+		    }
+		});
+
+
+		
 
 		for (String label : labels) {
 		 panel_3.add(DefaultComponentFactory.getInstance().createLabel(label));
@@ -328,6 +398,28 @@ public class GUI extends JFrame {
 	    
 	    
 	}
+	
+	// Add a method to enable/disable panel_2 buttons
+	private void setPanel2ButtonsEnabled(boolean enabled) {
+	    for (int col = 0; col < 32; col++) {
+	        for (int row = 0; row < 10; row++) {
+	            buttons[col][row].setEnabled(enabled);
+	        }
+	    }
+	}
+	// Method to play the sound of a specific note
+    private void playNoteSound(String note) {
+    	try {
+        	URL soundUrl = GUI.class.getResource("/beep.wav");
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundUrl);
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            e.printStackTrace();
+        }
+    }
+
 	//button handler
 	private JButton createButton(int col, int row, int buttonWidth, int buttonHeight) {
         JButton button = new JButton(defaultImg);
@@ -343,42 +435,43 @@ public class GUI extends JFrame {
 
     }
 
+
 	private void handleButtonClick(int col, int row) {
 	    JButton currentButton = buttons[col][row];
 
 	    if (currentButton.getIcon().equals(beginImg)) {
 	        // If the icon is beginImg, change it back to defaultImg
 	        currentButton.setIcon(defaultImg);
-
-	        // Remove the clicked button information from the list
-	        int[] clickedInfo = {col, row};
-	        clickedButtons.removeIf(info -> info[0] == col && info[1] == row);
+	        clickedButtons[9 - row] = "  ";
 	    } else if (currentButton.getIcon().equals(defaultImg)) {
 	        // If the icon is defaultImg, change it to beginImg
 	        currentButton.setIcon(beginImg);
+	        String noteName = getNoteName(col);
 
-	        // Add clicked button information to the list
-	        int[] clickedInfo = {col, row};
-	        clickedButtons.add(clickedInfo);
+	        if (!clickedButtons[9 - row].equals("  ")) {
+	            // Display an error message if there is already a note at this position
+	            JOptionPane.showMessageDialog(this, "Note already exists for this note.", "Error", JOptionPane.ERROR_MESSAGE);
+	            // Change the icon back to defaultImg
+	            currentButton.setIcon(defaultImg);
+	        } else {
+	            clickedButtons[9 - row] = noteName;
+	        }
 	    }
 
 	    // Update textPane in panel_4
 	    updateTextPane();
 	}
+
 	
 	private void updateTextPane() {
 	    StringBuilder text = new StringBuilder();
 	    
 	    // Sort clickedButtons based on row in descending order
-	    clickedButtons.sort((a, b) -> Integer.compare(b[1], a[1]));
+	    //clickedButtons.sort((a, b) -> Integer.compare(b[1], a[1]));
 
 	    // Iterate through clickedButtons and append corresponding note names to text
-	    for (int[] info : clickedButtons) {
-	        int col = info[0];
-	        int row = info[1];
-
-	        String noteName = getNoteName(col);
-	        text.append(noteName).append(" ");
+	    for (String info : clickedButtons) {
+	        text.append(info).append(" ");
 	    }
 
 	    // Update textPane with the generated text
@@ -386,10 +479,6 @@ public class GUI extends JFrame {
 	}
 	
 	private String getNoteName(int col) {
-	    String[] labels = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B",
-	            "C2", "C#2", "D2", "D#2", "E2", "F2", "F#2", "G2", "G#2", "A2", "A#2", "B2",
-	            "C3", "C#3", "D3", "D#3", "E3", "F3", "F#3", "G3"};
-
 	    // Ensure col is within bounds
 	    col = Math.max(0, Math.min(col, labels.length - 1));
 
@@ -416,6 +505,8 @@ public class GUI extends JFrame {
 	    }
 
 	}
+	
+	
 
 	private class plusHandler implements ActionListener
 	{
@@ -440,7 +531,13 @@ public class GUI extends JFrame {
     private void updateBPMLabel() {
         bpmLabel.setText("BPM: " + Metronome.bpm);
     }
+    
+    
 	 }
+
+
+
+	
 	
 	//thread
 	class Metronome extends Thread
@@ -488,6 +585,7 @@ public class GUI extends JFrame {
             e.printStackTrace();
         }
     }
+
 	
 	
 	//
