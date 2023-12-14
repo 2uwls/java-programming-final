@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 import javax.sound.sampled.*;
 import java.io.File;
@@ -27,6 +28,12 @@ public class GUI extends JFrame {
 	private JPanel contentPane;
 	private JButton onOffBtn;
 	private JLabel bpmLabel;
+	//for note panel
+	private JButton[][] buttons;
+    private ImageIcon defaultImg = new ImageIcon(GUI.class.getResource("/img/pinoNoteBg1.png"));
+    private ImageIcon beginImg = new ImageIcon(GUI.class.getResource("/img/pinoNoteBgBegin.png"));
+    private ArrayList<int[]> clickedButtons = new ArrayList();
+
 
 	/**
 	 * Launch the application.
@@ -50,14 +57,17 @@ public class GUI extends JFrame {
 	public GUI() {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 842, 532);
+		setBounds(100, 100, 842, 456);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
-		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setContentPane(contentPane);
 		
+
+        
+        
+        
 		JLabel lblNewJgoodiesLabel = DefaultComponentFactory.getInstance().createLabel("Get a Piano");
 		lblNewJgoodiesLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		lblNewJgoodiesLabel.setForeground(Color.BLACK);
@@ -66,7 +76,7 @@ public class GUI extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
-		panel.setBounds(71, 379, 723, 119);
+		panel.setBounds(16, 307, 723, 119);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -85,10 +95,10 @@ public class GUI extends JFrame {
 		JButton btnNewButton = new JButton("");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				playSound("wor/sound/FX_piano01.mp3");
+				playSound();
 			}
 
-			private void playSound(String string) {
+			private void playSound() {
 				try {
 		            // Open an audio input stream
 					URL piano01Url = GUI.class.getResource("/beep.wav");
@@ -241,7 +251,7 @@ public class GUI extends JFrame {
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(Color.WHITE);
-		panel_1.setBounds(720, 6, 89, 149);
+		panel_1.setBounds(747, 277, 89, 149);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 
@@ -268,6 +278,43 @@ public class GUI extends JFrame {
 		bpmLabel.setBounds(6, 123, 77, 20);
 		panel_1.add(bpmLabel);
 		
+		
+		
+		JPanel panel_2 = new JPanel();
+		panel_2.setBounds(16, 46, 723, 228);
+		contentPane.add(panel_2);
+		panel_2.setLayout(null);
+		
+		JPanel panel_3 = new JPanel();
+		panel_3.setBounds(16, 273, 723, 35);
+		contentPane.add(panel_3);
+		panel_3.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		String[] labels = {"C4", "C#4", "D4", "D#4", "E4", "F4", "F#4", "G4", "G#4", "A4", "A#4", "B4", 
+                "C5", "C#5", "D5", "D#5", "E5", "F5", "F#5", "G5", "G#5", "A5", "A#5", "B5", 
+                "C6", "C#6", "D6", "D#6", "E6", "F6", "F#6", "G6"};
+
+		for (String label : labels) {
+		 panel_3.add(DefaultComponentFactory.getInstance().createLabel(label));
+		}
+		
+		// Create buttons array
+        buttons = new JButton[32][10];
+        
+        int buttonWidth = panel_2.getWidth() / 32;
+        int buttonHeight = panel_2.getHeight() / 10;
+
+     // Populate buttons in panel_2
+        for (int col = 0; col < 32; col++) {
+            for (int row = 0; row < 10; row++) {
+                buttons[col][row] = createButton(col, row, buttonWidth, buttonHeight);
+                panel_2.add(buttons[col][row]);
+            }
+        }
+
+		
+
+		
 		toggleHandler handler = new toggleHandler();
 	    onOffBtn.addActionListener(handler);
 
@@ -279,6 +326,47 @@ public class GUI extends JFrame {
 	    
 	    
 	}
+	//button handler
+	private JButton createButton(int col, int row, int buttonWidth, int buttonHeight) {
+        JButton button = new JButton(defaultImg);
+
+        int x = col * buttonWidth;
+        int y = row * buttonHeight;
+        button.setBounds(x, y, buttonWidth, buttonHeight);
+
+     // Add ActionListener to handle button clicks
+        button.addActionListener(e -> handleButtonClick(col, row));
+
+        return button;
+
+    }
+
+	private void handleButtonClick(int col, int row) {
+	    JButton currentButton = buttons[col][row];
+
+	    if (currentButton.getIcon().equals(beginImg)) {
+	        // If the icon is beginImg, change it back to defaultImg
+	        currentButton.setIcon(defaultImg);
+
+	        // Remove the clicked button information from the list
+	        int[] clickedInfo = {col, row};
+	        clickedButtons.removeIf(info -> info[0] == col && info[1] == row);
+	    } else if (currentButton.getIcon().equals(defaultImg)) {
+	        // If the icon is defaultImg, change it to beginImg
+	        currentButton.setIcon(beginImg);
+
+	        // Add clicked button information to the list
+	        int[] clickedInfo = {col, row};
+	        clickedButtons.add(clickedInfo);
+	    }
+
+	    // Print clicked buttons information (for testing purposes)
+	    System.out.println("Clicked Buttons:");
+	    for (int[] info : clickedButtons) {
+	        System.out.println("Column: " + info[0] + ", Row: " + info[1]);
+	    }
+	}
+
 	
 	private class toggleHandler implements ActionListener {
 	    private Metronome metro;
@@ -322,9 +410,9 @@ public class GUI extends JFrame {
     private void updateBPMLabel() {
         bpmLabel.setText("BPM: " + Metronome.bpm);
     }
-	
 	 }
-
+	
+	//thread
 	class Metronome extends Thread
 	{
 	private AtomicBoolean keepRunning;
@@ -370,5 +458,11 @@ public class GUI extends JFrame {
             e.printStackTrace();
         }
     }
+	
+	
+	//
+	
 
 }
+	
+	
