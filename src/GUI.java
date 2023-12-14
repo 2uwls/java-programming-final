@@ -10,11 +10,23 @@ import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.concurrent.atomic.AtomicBoolean;
+import javax.sound.sampled.*;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+
 
 public class GUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private JButton onOffBtn;
+	private JLabel bpmLabel;
 
 	/**
 	 * Launch the application.
@@ -71,6 +83,30 @@ public class GUI extends JFrame {
 		panel.add(blackKey2);
 		
 		JButton btnNewButton = new JButton("");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				playSound("wor/sound/FX_piano01.mp3");
+			}
+
+			private void playSound(String string) {
+				try {
+		            // Open an audio input stream
+					URL piano01Url = GUI.class.getResource("/beep.wav");
+		            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(piano01Url);
+
+		            // Get a Clip resource
+		            Clip clip = AudioSystem.getClip();
+
+		            // Open audio clip and load samples from the audio input stream
+		            clip.open(audioInputStream);
+
+		            // Start playing the clip
+		            clip.start();
+		        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
+		            ex.printStackTrace();
+		        }
+			}
+		});
 		btnNewButton.setBounds(6, 6, 42, 107);
 		panel.add(btnNewButton);
 		
@@ -205,18 +241,134 @@ public class GUI extends JFrame {
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(Color.WHITE);
-		panel_1.setBounds(735, 6, 89, 96);
+		panel_1.setBounds(720, 6, 89, 149);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
+
 		
-		JButton btnNewButton_6 = new JButton("");
-		btnNewButton_6.setBackground(new Color(255, 255, 255));
-		btnNewButton_6.addActionListener(new ActionListener() {
+		onOffBtn = new JButton("onOffBtn");
+		onOffBtn.setBackground(new Color(255, 255, 255));
+		onOffBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNewButton_6.setIcon(new ImageIcon(GUI.class.getResource("/img/metronome.png")));
-		btnNewButton_6.setBounds(6, 6, 77, 84);
-		panel_1.add(btnNewButton_6);
+		onOffBtn.setIcon(new ImageIcon(GUI.class.getResource("/img/metronome.png")));
+		onOffBtn.setBounds(6, 6, 77, 84);
+		panel_1.add(onOffBtn);
+		
+		JButton plusBtn = new JButton("+");
+		plusBtn.setBounds(6, 89, 41, 29);
+		panel_1.add(plusBtn);
+		
+		JButton minusBtn = new JButton("-");
+		minusBtn.setBounds(42, 89, 41, 29);
+		panel_1.add(minusBtn);
+		
+		bpmLabel = new JLabel("BPM: " + Metronome.bpm);
+		bpmLabel.setBounds(6, 123, 77, 20);
+		panel_1.add(bpmLabel);
+		
+		toggleHandler handler = new toggleHandler();
+	    onOffBtn.addActionListener(handler);
+
+	    plusHandler plusHandle = new plusHandler();
+	    plusBtn.addActionListener(plusHandle);
+
+	    minusHandler minusHandle = new minusHandler();
+	    minusBtn.addActionListener(minusHandle);
+	    
+	    
 	}
+	
+	private class toggleHandler implements ActionListener {
+	    private Metronome metro;
+
+	    @Override
+	    public void actionPerformed(java.awt.event.ActionEvent e) {
+	        if (e.getActionCommand().equals("onOffBtn")) {
+	            if (metro == null) {
+	                metro = new Metronome();
+	                Thread t = new Thread(metro);
+	                t.start();
+	            } else {
+	                metro.end();
+	                metro = null;
+	            }
+	        }
+	    }
+
+	}
+
+	private class plusHandler implements ActionListener
+	{
+	    @Override
+	    public void actionPerformed(java.awt.event.ActionEvent e)
+	    {
+	        Metronome.bpm++;
+	        updateBPMLabel();
+	    }
+	}
+
+	private class minusHandler implements ActionListener
+	{
+	    @Override
+	    public void actionPerformed(java.awt.event.ActionEvent e)
+	    {
+	        Metronome.bpm--;
+	        updateBPMLabel();
+	    }
+	}
+	// Add this method to update the BPM label
+    private void updateBPMLabel() {
+        bpmLabel.setText("BPM: " + Metronome.bpm);
+    }
+	
+	 }
+
+	class Metronome extends Thread
+	{
+	private AtomicBoolean keepRunning;
+	static double bpm = 60;
+
+	public Metronome()
+	{
+	    keepRunning = new AtomicBoolean(true);
+	}
+
+	public void end()
+	{
+	    keepRunning.set(false);
+	    System.out.println("STOPPED");
+	}
+
+	@Override
+	public void run()
+	{
+	    while (keepRunning.get())
+	    {
+	        try
+	        {
+	            Thread.sleep((long)(1000*(60.0/bpm)));
+	            playMetronomeSound();
+	        }
+	        catch(InterruptedException e)
+	        {
+	            e.printStackTrace();
+	        }
+
+	        System.out.println("RUNNING");
+	    }
+	}
+	private void playMetronomeSound() {
+        try {
+        	URL soundUrl = GUI.class.getResource("/beep.wav");
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundUrl);
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
