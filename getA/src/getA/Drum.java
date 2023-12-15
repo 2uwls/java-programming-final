@@ -50,8 +50,6 @@ public class Drum extends JFrame implements ActionListener, MetronomeListener {
 	
 	private Metronome metronome;
 
-
-
 	// Main method to launch the Drum GUI
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -106,9 +104,6 @@ public class Drum extends JFrame implements ActionListener, MetronomeListener {
 	    metronome.setMetronomeListener(this);
 	    metronome.start();
 	    metronome.end();
-
-		
-		
 		
 		// Create and configure the note display panel
 		JPanel notePanel = new JPanel();
@@ -231,8 +226,7 @@ public class Drum extends JFrame implements ActionListener, MetronomeListener {
 		    }
 		});
 
-		
-		
+			
 		// Create buttons array
         buttons = new JButton[32][4];
         
@@ -366,16 +360,13 @@ public class Drum extends JFrame implements ActionListener, MetronomeListener {
             if (metronome.isRunning()) {
                 metronome.end();
             } else {
-            	
                 metronome = new Metronome(); // Create a new Metronome instance
                 metronome.setMetronomeListener(Drum.this); // Register Drum as a listener
-             
                 metronome.start();
             }
         }
     }
 	
-
 	// ActionListener interface method (unused in this implementation)
 	@Override
 	public void actionPerformed(ActionEvent e) {

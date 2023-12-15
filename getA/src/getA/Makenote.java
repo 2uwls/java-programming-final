@@ -24,9 +24,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import javax.swing.GroupLayout.Alignment;
-//import com.jgoodies.forms.layout.FormLayout;
-//import com.jgoodies.forms.layout.ColumnSpec;
-//import com.jgoodies.forms.layout.RowSpec;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionEvent;
 import java.io.FileOutputStream;
@@ -44,8 +41,8 @@ public class Makenote extends JFrame implements ActionListener, MetronomeListene
 	private JLabel bpmLabel;
 	//for note panel
 	private JButton[][] buttons;
-    private ImageIcon defaultImg = new ImageIcon(Makenote.class.getResource("/img/pinoNoteBg1.png"));
-    private ImageIcon beginImg = new ImageIcon(Makenote.class.getResource("/img/pinoNoteBgBegin.png"));
+    private ImageIcon defaultImg = new ImageIcon(Makenote.class.getResource("/img/defaultNote.png"));
+    private ImageIcon beginImg = new ImageIcon(Makenote.class.getResource("/img/cahngeNote.png"));
     private String[] clickedButtons = {"  ", "  ", "  ", "  ", "  ", "  ","  ","  ","  ","  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ","  ","  ","  ","  ", "  ", "  ", "  ", "  ","  ","  ","  ","  ", };
 	private JTextArea textArea;
 	private String[] labels = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B", 

@@ -26,12 +26,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-
-
-//import com.jgoodies.forms.factories.DefaultComponentFactory;
-
-
 public class Piano extends JFrame implements ActionListener, MetronomeListener {
     private JMenuBar menuBar;
     private JMenu menu;
@@ -46,7 +40,6 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 	private long startTime;
 	private int duration;
 	
-	
 	// GUI components
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -55,7 +48,6 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 	private JButton btnRecord;
 	private JButton btnStop;
 	private JButton btnPlay;
-	
 	
 
     public Piano() {
@@ -99,9 +91,7 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 				if (isRecording()) {
                     return;
                 }
-
                 startRecording();
-				
 			}
 		});
         btnRecord.setBounds(594, 10, 117, 29);
@@ -113,9 +103,7 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
         		if (!isRecording()) {
                     return;
                 }
-
                 stopRecording();
-                printRecordedNotes();
         	}
         });
         btnStop.setBounds(594, 39, 117, 29);
@@ -153,7 +141,6 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 			        }
 			}
 
-			
 		});
 		Csharp.setForeground(new Color(0, 0, 0));
 		Csharp.setBackground(new Color(0, 0, 0));
@@ -190,8 +177,6 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 			            System.out.printf("%s", pitchName);
 			        }
 			}
-
-			
 		});
 		C.setBounds(6, 6, 42, 107);
 		panel.add(C);
@@ -208,8 +193,6 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 			            System.out.printf("%s", pitchName);
 			        }
 			}
-
-			
 		});
 		panel.add(E);
 		
@@ -224,8 +207,6 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 			            System.out.printf("%s", pitchName);
 			        }
 			}
-
-			
 		});
 		D.setBounds(43, 6, 42, 107);
 		panel.add(D);
@@ -241,8 +222,6 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 			            System.out.printf("%s", pitchName);
 			        }
 			}
-
-			
 		});
 		Fsharp.setBounds(139, 6, 34, 73);
 		Fsharp.setIcon(new ImageIcon(GUI.class.getResource("/img/blackKey.png")));
@@ -259,8 +238,6 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 			            System.out.printf("%s", pitchName);
 			        }
 			}
-
-			
 		});
 		F.setBounds(117, 6, 42, 107);
 		panel.add(F);
@@ -279,7 +256,6 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 			        }
 			}
 
-			
 		});
 		
 		panel.add(Gsharp);
@@ -296,7 +272,6 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 			        }
 			}
 
-			
 		});
 		
 		G.setBounds(154, 6, 42, 107);
@@ -315,7 +290,6 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 			        }
 			}
 
-			
 		});
 		Asharp.setIcon(new ImageIcon(GUI.class.getResource("/img/blackKey.png")));
 		
@@ -333,7 +307,6 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 			        }
 			}
 
-			
 		});
 		A.setBounds(191, 6, 42, 107);
 		panel.add(A);
@@ -350,7 +323,6 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 			        }
 			}
 
-			
 		});
 		B.setBounds(228, 6, 42, 107);
 		panel.add(B);
@@ -367,13 +339,10 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 			        }
 			}
 
-			
 		});
 		C2sharp.setBounds(287, 6, 34, 73);
 		C2sharp.setIcon(new ImageIcon(GUI.class.getResource("/img/blackKey.png")));
 		panel.add(C2sharp);
-		
-		
 		
 		JButton C2 = new JButton("");
 		C2.setName("C2");
@@ -386,20 +355,16 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 			            System.out.printf("%s", pitchName);
 			        }
 			}
-
-			
+	
 		});
 		
 		
 		C2.setBounds(265, 6, 42, 107);
 		panel.add(C2);
 		
-		
-		
-		
+
 		JButton D2sharp= new JButton("");
 		D2sharp.setBounds(325, 6, 34, 73);
-		
 		D2sharp.setName("D2#");
 		D2sharp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -411,7 +376,6 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 			        }
 			}
 
-			
 		});
 		D2sharp.setIcon(new ImageIcon(GUI.class.getResource("/img/blackKey.png")));
 		panel.add(D2sharp);
@@ -428,11 +392,9 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 			        }
 			}
 
-			
 		});
 		D2.setBounds(302, 6, 42, 107);
 		panel.add(D2);
-		
 		
 		JButton E2 = new JButton("");
 		E2.setName("E2");
@@ -446,7 +408,6 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 			        }
 			}
 
-			
 		});
 		E2.setBounds(339, 6, 42, 107);
 		panel.add(E2);
@@ -463,7 +424,6 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 			        }
 			}
 
-			
 		});
 		F2sharp.setBounds(399, 6, 34, 73);
 		F2sharp.setIcon(new ImageIcon(GUI.class.getResource("/img/blackKey.png")));
@@ -480,8 +440,7 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 			            System.out.printf("%s", pitchName);
 			        }
 			}
-
-			
+	
 		});
 		F2.setBounds(376, 6, 42, 107);
 		panel.add(F2);
@@ -498,7 +457,6 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 			        }
 			}
 
-			
 		});
 		G2sharp.setBounds(436, 6, 34, 73);
 		G2sharp.setIcon(new ImageIcon(GUI.class.getResource("/img/blackKey.png")));
@@ -516,7 +474,6 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 			        }
 			}
 
-			
 		});
 		G2.setBounds(413, 6, 42, 107);
 		panel.add(G2);
@@ -533,7 +490,6 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 			        }
 			}
 
-			
 		});
 		A2sharp.setBounds(472, 6, 34, 73);
 		A2sharp.setIcon(new ImageIcon(GUI.class.getResource("/img/blackKey.png")));
@@ -551,7 +507,6 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 			        }
 			}
 
-			
 		});
 		A2.setBounds(450, 6, 42, 107);
 		panel.add(A2);
@@ -568,7 +523,6 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 			        }
 			}
 
-			
 		});
 		B2.setBounds(487, 6, 42, 107);
 		panel.add(B2);
@@ -585,7 +539,6 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 			        }
 			}
 
-			
 		});
 		C3sharp.setBounds(547, 6, 34, 73);
 		C3sharp.setIcon(new ImageIcon(GUI.class.getResource("/img/blackKey.png")));
@@ -603,7 +556,6 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 			        }
 			}
 
-			
 		});
 		C3.setBounds(524, 6, 42, 107);
 		panel.add(C3);
@@ -620,7 +572,6 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 			        }
 			}
 
-			
 		});
 		D3sharp.setBounds(584, 6, 34, 73);
 		D3sharp.setIcon(new ImageIcon(GUI.class.getResource("/img/blackKey.png")));
@@ -637,8 +588,7 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 			            System.out.printf("%s", pitchName);
 			        }
 			}
-
-			
+	
 		});
 		D3.setBounds(561, 6, 42, 107);
 		panel.add(D3);
@@ -654,8 +604,6 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 			            System.out.printf("%s", pitchName);
 			        }
 			}
-
-			
 		});
 		E3.setBounds(598, 6, 42, 107);
 		panel.add(E3);
@@ -671,8 +619,7 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 			            System.out.printf("%s", pitchName);
 			        }
 			}
-
-			
+	
 		});
 		F3sharp.setBounds(658, 6, 34, 73);
 		F3sharp.setIcon(new ImageIcon(GUI.class.getResource("/img/blackKey.png")));
@@ -690,7 +637,6 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 			        }
 			}
 
-			
 		});
 		F3.setBounds(635, 6, 42, 107);
 		panel.add(F3);
@@ -781,14 +727,12 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 	        } else if (source == btnRecord) {
 	        	if (isRecording) {
 	                stopRecording();
-	                printRecordedNotes();
 	            } else {
 	                startRecording();
 	            }
 	        } else if (source == btnStop) {
 	        	if (isRecording) {
 	                stopRecording();
-	                printRecordedNotes();
 	            }
 	        } else if (source == btnPlay) {
 	        	if (!recordedNotes.isEmpty()) {
@@ -816,17 +760,6 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 	        String pitchName = clickedButton.getName();
 	        playSound(pitchName+".wav"); // Adjust the sound file path accordingly
 	    }
-	 
-	 
-	private void printRecordedNotes() {
-	    System.out.println("녹음된 음악 정보:");
-	    for (RecordedNote note : recordedNotes) {
-	        System.out.println("음높이: " + note.pitch);
-	        System.out.println("녹음 시간: " + note.timestamp);
-	        System.out.println("사운드 파일: " + note.soundFile);
-	    }
-	}
-	
 
 	private void recordNote(String pitch) {
 	    long timestamp = System.currentTimeMillis() - startTime;
@@ -892,9 +825,6 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
         }
     }
 	
-	
-	
-
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
             try {
