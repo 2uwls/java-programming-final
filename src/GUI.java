@@ -20,6 +20,14 @@ import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import javax.swing.GroupLayout.Alignment;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.RowSpec;
+import javax.swing.border.EmptyBorder;
+import java.awt.event.ActionEvent;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
 
 
 public class GUI extends JFrame {
@@ -32,11 +40,10 @@ public class GUI extends JFrame {
 	private JButton[][] buttons;
     private ImageIcon defaultImg = new ImageIcon(GUI.class.getResource("/img/pinoNoteBg1.png"));
     private ImageIcon beginImg = new ImageIcon(GUI.class.getResource("/img/pinoNoteBgBegin.png"));
-    private String[] clickedButtons = {"  ", "  ", "  ", "  ", "  ", "  ","  ","  ","  ","  "};
+    private String[] clickedButtons = {"  ", "  ", "  ", "  ", "  ", "  ","  ","  ","  ","  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ","  ","  ","  ","  ", "  ", "  ", "  ", "  ","  ","  ","  ","  ", };
 	private JTextArea textArea;
 	private String[] labels = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B", 
-            "C2", "C#2", "D2", "D#2", "E2", "F2", "F#2", "G2", "G#2", "A2", "A#2", "B2", 
-            "C3", "C#3", "D3", "D#3", "E3", "F3", "F#3", "G3"};
+            "C2"};
 
 
 
@@ -63,7 +70,7 @@ public class GUI extends JFrame {
 		
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 842, 557);
+		setBounds(100, 100, 842, 453);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -76,223 +83,51 @@ public class GUI extends JFrame {
 		lblNewJgoodiesLabel.setBounds(381, 6, 113, 28);
 		contentPane.add(lblNewJgoodiesLabel);
 		
-		JPanel panel = new JPanel();
-		panel.setBackground(Color.WHITE);
-		panel.setBounds(16, 404, 723, 119);
-		contentPane.add(panel);
-		panel.setLayout(null);
-		
-		JButton blackKey1 = new JButton("");
-		blackKey1.setForeground(new Color(0, 0, 0));
-		blackKey1.setBackground(new Color(0, 0, 0));
-		blackKey1.setIcon(new ImageIcon(GUI.class.getResource("/img/blackKey.png")));
-		blackKey1.setBounds(28, 6, 34, 73);
-		panel.add(blackKey1);
-		
-		JButton blackKey2 = new JButton("");
-		blackKey2.setIcon(new ImageIcon(GUI.class.getResource("/img/blackKey.png")));
-		blackKey2.setBounds(66, 6, 34, 73);
-		panel.add(blackKey2);
-		
-		JButton btnNewButton = new JButton("");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				playSound();
-			}
-
-			private void playSound() {
-				try {
-		            // Open an audio input stream
-					URL piano01Url = GUI.class.getResource("/beep.wav");
-		            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(piano01Url);
-
-		            // Get a Clip resource
-		            Clip clip = AudioSystem.getClip();
-
-		            // Open audio clip and load samples from the audio input stream
-		            clip.open(audioInputStream);
-
-		            // Start playing the clip
-		            clip.start();
-		        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
-		            ex.printStackTrace();
-		        }
-			}
-		});
-		btnNewButton.setBounds(6, 6, 42, 107);
-		panel.add(btnNewButton);
-		
-		JButton btnNewButton_2 = new JButton("");
-		btnNewButton_2.setBounds(80, 6, 42, 107);
-		panel.add(btnNewButton_2);
-		
-		JButton btnNewButton_1 = new JButton("");
-		btnNewButton_1.setBounds(43, 6, 42, 107);
-		panel.add(btnNewButton_1);
-		
-		JButton blackKey3 = new JButton("");
-		blackKey3.setBounds(139, 6, 34, 73);
-		blackKey3.setIcon(new ImageIcon(GUI.class.getResource("/img/blackKey.png")));
-		panel.add(blackKey3);
-		
-		JButton btnNewButton_3 = new JButton("");
-		btnNewButton_3.setBounds(117, 6, 42, 107);
-		panel.add(btnNewButton_3);
-		
-		JButton blackKey4 = new JButton("");
-		blackKey4.setBounds(177, 6, 34, 73);
-		blackKey4.setIcon(new ImageIcon(GUI.class.getResource("/img/blackKey.png")));
-		panel.add(blackKey4);
-		
-		JButton btnNewButton_1_2 = new JButton("");
-		btnNewButton_1_2.setBounds(154, 6, 42, 107);
-		panel.add(btnNewButton_1_2);
-		
-		JButton blackKey5 = new JButton("");
-		blackKey5.setBounds(214, 6, 34, 73);
-		blackKey5.setIcon(new ImageIcon(GUI.class.getResource("/img/blackKey.png")));
-		panel.add(blackKey5);
-		
-		JButton btnNewButton_2_1 = new JButton("");
-		btnNewButton_2_1.setBounds(191, 6, 42, 107);
-		panel.add(btnNewButton_2_1);
-		
-		JButton btnNewButton_2_1_1 = new JButton("");
-		btnNewButton_2_1_1.setBounds(228, 6, 42, 107);
-		panel.add(btnNewButton_2_1_1);
-		
-		JButton blackKey6 = new JButton("");
-		blackKey6.setBounds(287, 6, 34, 73);
-		blackKey6.setIcon(new ImageIcon(GUI.class.getResource("/img/blackKey.png")));
-		panel.add(blackKey6);
-		
-		JButton btnNewButton_4 = new JButton("");
-		btnNewButton_4.setBounds(265, 6, 42, 107);
-		panel.add(btnNewButton_4);
-		
-		JButton blackKey7 = new JButton("");
-		blackKey7.setBounds(325, 6, 34, 73);
-		blackKey7.setIcon(new ImageIcon(GUI.class.getResource("/img/blackKey.png")));
-		panel.add(blackKey7);
-		
-		JButton btnNewButton_1_3 = new JButton("");
-		btnNewButton_1_3.setBounds(302, 6, 42, 107);
-		panel.add(btnNewButton_1_3);
-		
-		JButton btnNewButton_2_2 = new JButton("");
-		btnNewButton_2_2.setBounds(339, 6, 42, 107);
-		panel.add(btnNewButton_2_2);
-		
-		JButton blackKey8 = new JButton("");
-		blackKey8.setBounds(399, 6, 34, 73);
-		blackKey8.setIcon(new ImageIcon(GUI.class.getResource("/img/blackKey.png")));
-		panel.add(blackKey8);
-		
-		JButton btnNewButton_3_1 = new JButton("");
-		btnNewButton_3_1.setBounds(376, 6, 42, 107);
-		panel.add(btnNewButton_3_1);
-		
-		JButton blackKey9 = new JButton("");
-		blackKey9.setBounds(436, 6, 34, 73);
-		blackKey9.setIcon(new ImageIcon(GUI.class.getResource("/img/blackKey.png")));
-		panel.add(blackKey9);
-		
-		JButton btnNewButton_1_2_1 = new JButton("");
-		btnNewButton_1_2_1.setBounds(413, 6, 42, 107);
-		panel.add(btnNewButton_1_2_1);
-		
-		JButton blackKey10 = new JButton("");
-		blackKey10.setBounds(472, 6, 34, 73);
-		blackKey10.setIcon(new ImageIcon(GUI.class.getResource("/img/blackKey.png")));
-		panel.add(blackKey10);
-		
-		JButton btnNewButton_2_1_2 = new JButton("");
-		btnNewButton_2_1_2.setBounds(450, 6, 42, 107);
-		panel.add(btnNewButton_2_1_2);
-		
-		JButton btnNewButton_2_1_1_1 = new JButton("");
-		btnNewButton_2_1_1_1.setBounds(487, 6, 42, 107);
-		panel.add(btnNewButton_2_1_1_1);
-		
-		JButton blackKey11 = new JButton("");
-		blackKey11.setBounds(547, 6, 34, 73);
-		blackKey11.setIcon(new ImageIcon(GUI.class.getResource("/img/blackKey.png")));
-		panel.add(blackKey11);
-		
-		JButton btnNewButton_5 = new JButton("");
-		btnNewButton_5.setBounds(524, 6, 42, 107);
-		panel.add(btnNewButton_5);
-		
-		JButton blackKey12 = new JButton("");
-		blackKey12.setBounds(584, 6, 34, 73);
-		blackKey12.setIcon(new ImageIcon(GUI.class.getResource("/img/blackKey.png")));
-		panel.add(blackKey12);
-		
-		JButton btnNewButton_1_4 = new JButton("");
-		btnNewButton_1_4.setBounds(561, 6, 42, 107);
-		panel.add(btnNewButton_1_4);
-		
-		JButton btnNewButton_2_3 = new JButton("");
-		btnNewButton_2_3.setBounds(598, 6, 42, 107);
-		panel.add(btnNewButton_2_3);
-		
-		JButton blackKey13 = new JButton("");
-		blackKey13.setBounds(658, 6, 34, 73);
-		blackKey13.setIcon(new ImageIcon(GUI.class.getResource("/img/blackKey.png")));
-		panel.add(blackKey13);
-		
-		JButton btnNewButton_3_2 = new JButton("");
-		btnNewButton_3_2.setBounds(635, 6, 42, 107);
-		panel.add(btnNewButton_3_2);
-		
-		JButton btnNewButton_1_2_2 = new JButton("");
-		btnNewButton_1_2_2.setBounds(672, 6, 42, 107);
-		panel.add(btnNewButton_1_2_2);
-		
 
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(Color.WHITE);
-		panel_1.setBounds(747, 277, 89, 149);
+		panel_1.setBounds(736, 266, 106, 149);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 
 		
-		onOffBtn = new JButton("onOffBtn");
+		onOffBtn = new JButton("");
 		onOffBtn.setBackground(new Color(255, 255, 255));
 		onOffBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		onOffBtn.setIcon(new ImageIcon(GUI.class.getResource("/img/metronome.png")));
-		onOffBtn.setBounds(6, 6, 77, 84);
+		onOffBtn.setBounds(6, 6, 94, 84);
 		panel_1.add(onOffBtn);
 		
 		JButton plusBtn = new JButton("+");
-		plusBtn.setBounds(6, 89, 41, 29);
+		plusBtn.setBounds(16, 89, 41, 29);
 		panel_1.add(plusBtn);
 		
 		JButton minusBtn = new JButton("-");
-		minusBtn.setBounds(42, 89, 41, 29);
+		minusBtn.setBounds(52, 89, 41, 29);
 		panel_1.add(minusBtn);
 		
 		bpmLabel = new JLabel("BPM: " + Metronome.bpm);
-		bpmLabel.setBounds(6, 123, 77, 20);
+		bpmLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		bpmLabel.setBounds(6, 123, 97, 20);
 		panel_1.add(bpmLabel);
 		
 		
 		JPanel panel_2 = new JPanel();
-		panel_2.setBounds(16, 143, 723, 228);
+		panel_2.setBounds(37, 143, 698, 272);
 		contentPane.add(panel_2);
 		panel_2.setLayout(null);
 		
 		JPanel panel_3 = new JPanel();
-		panel_3.setBounds(16, 370, 723, 35);
+		panel_3.setBounds(16, 143, 19, 272);
 		contentPane.add(panel_3);
-		panel_3.setLayout(new GridLayout(1, 0, 0, 0));
+		panel_3.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		JPanel panel_4 = new JPanel();
-		panel_4.setBounds(16, 59, 723, 82);
+		panel_4.setBounds(16, 59, 719, 82);
 		contentPane.add(panel_4);
 		panel_4.setLayout(null);
 		
@@ -302,7 +137,7 @@ public class GUI extends JFrame {
 		
 		JPanel panel_5 = new JPanel();
 		panel_5.setBackground(Color.WHITE);
-		panel_5.setBounds(633, 0, 106, 56);
+		panel_5.setBounds(736, 211, 106, 56);
 		contentPane.add(panel_5);
 		panel_5.setLayout(null);
 		
@@ -316,98 +151,17 @@ public class GUI extends JFrame {
 		panel_5.add(playBtn);
 		playBtn.setIcon(new ImageIcon(GUI.class.getResource("/img/play.png")));
 		
-//		playBtn.addActionListener(new ActionListener() {
-//		    @Override
-//		    public void actionPerformed(ActionEvent e) {
-//		        // Iterate through each row (beat)
-//		        for (int row = 0; row < 10; row++) {
-//		            String note = clickedButtons[row];s
-//
-//		            // Check if the note is not an empty string
-//		            if (!note.trim().isEmpty()) {
-//		                // Play the note sound
-//		                playNoteSound(note);
-//		            }
-//
-//		            // Sleep for 1 second before playing the next note
-//		            try {
-//		                Thread.sleep(500);
-//		            } catch (InterruptedException ex) {
-//		                ex.printStackTrace();
-//		            }
-//		        }
-//		    }
-//
-//		    
-//
-//			
-//		});
+		JPanel panel = new JPanel();
+		panel.setBounds(736, 143, 106, 66);
+		contentPane.add(panel);
+		panel.setLayout(null);
 		
-//		playBtn.addActionListener(new ActionListener() {
-//		    //private double bpm;
-//			
-//
-//			@Override
-//		    public void actionPerformed(ActionEvent e) {
-//		        // Check if already playing
-//		        if (playStatusLabel.getText().equals("Play")) {
-//		            // Set playBtn text to "playing" and disable panel_2 buttons
-//		        	playStatusLabel.setText("Playing");
-//		        	playStatusLabel.setForeground(Color.RED); // 글자 색을 빨간색으로 변경
-//		            setPanel2ButtonsEnabled(false);
-//		            playBtn.repaint(); // 버튼을 갱신
-//		            
-//		            
-//
-//		            // Iterate through each row (beat)
-//		            for (int row = 0; row < 10; row++) {
-//		                String note = clickedButtons[row];
-//
-//		                // Check if the note is not an empty string
-//		                if (note!="  ") {
-//		                	try {
-//		                        // Load the audio file for the specific note
-//		                        URL soundUrl = GUI.class.getResource("/sound/" + note + ".wav");
-//		                        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundUrl);
-//		                        Clip clip = AudioSystem.getClip();
-//		                        clip.open(audioInputStream);
-//
-//		                        // Start playing the clip
-//		                        clip.start();
-//
-//		                        // Sleep for 2 seconds (adjust the duration as needed)
-//		                        Thread.sleep((long) (300*(60/Metronome.bpm)));
-//		                    } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
-//		                        e1.printStackTrace();
-//		                    }
-//		                }else {
-//		                	try {
-//								Thread.sleep((long) (500*(60/Metronome.bpm)));
-//							} catch (InterruptedException e1) {
-//								// TODO Auto-generated catch block
-//								e1.printStackTrace();
-//							}
-//		                }
-//
-//		                // Sleep for 1 second before playing the next note
-////		                try {
-////		                    Thread.sleep(1000);
-////		                } catch (InterruptedException ex) {
-////		                    ex.printStackTrace();
-////		                }
-//		            }
-//
-//		            // After playing, set playBtn text to "PLAY" and enable panel_2 buttons
-//		            playBtn.setText("Play");
-//		            playBtn.repaint(); // 버튼을 갱신
-//		            setPanel2ButtonsEnabled(true);
-//		        }
-//		    }
-//		});
-//
-//
-//		
-//
+		JButton makeFileBtn = new JButton("MakeFile");
+		makeFileBtn.setHorizontalAlignment(SwingConstants.LEADING);
+		makeFileBtn.setBounds(0, 6, 106, 55);
+		panel.add(makeFileBtn);
+		
+
 		
 		playBtn.addActionListener(new ActionListener() {
 		    @Override
@@ -420,8 +174,8 @@ public class GUI extends JFrame {
 
 		            // Start a new thread for playing sounds
 		            new Thread(() -> {
-		                for (int row = 0; row < 10; row++) {
-		                    String note = clickedButtons[row];
+		                for (int col = 0; col < 32; col++) {
+		                    String note = clickedButtons[col];
 
 		                    if (!note.equals("  ")) {
 		                        try {
@@ -464,14 +218,14 @@ public class GUI extends JFrame {
 		}
 		
 		// Create buttons array
-        buttons = new JButton[32][10];
+        buttons = new JButton[32][13];
         
         int buttonWidth = panel_2.getWidth() / 32;
-        int buttonHeight = panel_2.getHeight() / 10;
+        int buttonHeight = panel_2.getHeight() / 13;
 
      // Populate buttons in panel_2
         for (int col = 0; col < 32; col++) {
-            for (int row = 0; row < 10; row++) {
+            for (int row = 0; row < 13; row++) {
                 buttons[col][row] = createButton(col, row, buttonWidth, buttonHeight);
                 panel_2.add(buttons[col][row]);
                 //buttons[col][row].addActionListener(e -> handlePanel2ButtonClick(col, row));
@@ -490,13 +244,43 @@ public class GUI extends JFrame {
 	    minusHandler minusHandle = new minusHandler();
 	    minusBtn.addActionListener(minusHandle);
 	    
+	 // Add an ActionListener to makeFileBtn
+        makeFileBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                saveToFile();
+            }
+        });
 	    
 	}
+	
+	private void saveToFile() {
+        try {
+            // Choose a file to save
+            JFileChooser fileChooser = new JFileChooser();
+            int userSelection = fileChooser.showSaveDialog(this);
+
+            if (userSelection == JFileChooser.APPROVE_OPTION) {
+                File fileToSave = fileChooser.getSelectedFile();
+
+                // Write the content of textArea to the selected file using FileOutputStream
+                try (FileOutputStream fos = new FileOutputStream(fileToSave);
+                     PrintWriter writer = new PrintWriter(fos)) {
+                    writer.println(textArea.getText());
+                }
+
+                JOptionPane.showMessageDialog(this, "File saved successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error saving file.", "Error", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
+        }
+    }
 	
 	// Add a method to enable/disable panel_2 buttons
 	private void setPanel2ButtonsEnabled(boolean enabled) {
 	    for (int col = 0; col < 32; col++) {
-	        for (int row = 0; row < 10; row++) {
+	        for (int row = 0; row < 13; row++) {
 	            buttons[col][row].setEnabled(enabled);
 	        }
 	    }
@@ -538,19 +322,19 @@ public class GUI extends JFrame {
 	    if (currentButton.getIcon().equals(beginImg)) {
 	        // If the icon is beginImg, change it back to defaultImg
 	        currentButton.setIcon(defaultImg);
-	        clickedButtons[9 - row] = "  ";
+	        clickedButtons[col] = "  ";
 	    } else if (currentButton.getIcon().equals(defaultImg)) {
 	        // If the icon is defaultImg, change it to beginImg
 	        currentButton.setIcon(beginImg);
-	        String noteName = getNoteName(col);
+	        String noteName = getNoteName(row);
 
-	        if (!clickedButtons[9 - row].equals("  ")) {
+	        if (!clickedButtons[col].equals("  ")) {
 	            // Display an error message if there is already a note at this position
 	            JOptionPane.showMessageDialog(this, "Note already exists for this note.", "Error", JOptionPane.ERROR_MESSAGE);
 	            // Change the icon back to defaultImg
 	            currentButton.setIcon(defaultImg);
 	        } else {
-	            clickedButtons[9 - row] = noteName;
+	            clickedButtons[col] = noteName;
 	        }
 	    }
 
@@ -574,11 +358,10 @@ public class GUI extends JFrame {
 	    textArea.setText(text.toString());
 	}
 	
-	private String getNoteName(int col) {
-	    // Ensure col is within bounds
-	    col = Math.max(0, Math.min(col, labels.length - 1));
+	private String getNoteName(int row) {
+	    row = Math.max(0, Math.min(row, labels.length - 1));
 
-	    return labels[col];
+	    return labels[row];
 	}
 
 
