@@ -300,16 +300,28 @@ public class GUI extends JFrame {
 		textArea.setBounds(6, 5, 711, 71);
 		panel_4.add(textArea);
 		
-		JButton playBtn = new JButton("PLAY");
-		playBtn.setBounds(747, 219, 89, 46);
-		contentPane.add(playBtn);
+		JPanel panel_5 = new JPanel();
+		panel_5.setBackground(Color.WHITE);
+		panel_5.setBounds(633, 0, 106, 56);
+		contentPane.add(panel_5);
+		panel_5.setLayout(null);
+		
+		JLabel playStatusLabel = DefaultComponentFactory.getInstance().createLabel("Play");
+		playStatusLabel.setBounds(59, 15, 47, 25);
+		panel_5.add(playStatusLabel);
+		playStatusLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		JButton playBtn = new JButton("");
+		playBtn.setBounds(6, 6, 47, 42);
+		panel_5.add(playBtn);
+		playBtn.setIcon(new ImageIcon(GUI.class.getResource("/img/play.png")));
 		
 //		playBtn.addActionListener(new ActionListener() {
 //		    @Override
 //		    public void actionPerformed(ActionEvent e) {
 //		        // Iterate through each row (beat)
 //		        for (int row = 0; row < 10; row++) {
-//		            String note = clickedButtons[row];
+//		            String note = clickedButtons[row];s
 //
 //		            // Check if the note is not an empty string
 //		            if (!note.trim().isEmpty()) {
@@ -331,43 +343,121 @@ public class GUI extends JFrame {
 //			
 //		});
 		
+//		playBtn.addActionListener(new ActionListener() {
+//		    //private double bpm;
+//			
+//
+//			@Override
+//		    public void actionPerformed(ActionEvent e) {
+//		        // Check if already playing
+//		        if (playStatusLabel.getText().equals("Play")) {
+//		            // Set playBtn text to "playing" and disable panel_2 buttons
+//		        	playStatusLabel.setText("Playing");
+//		        	playStatusLabel.setForeground(Color.RED); // 글자 색을 빨간색으로 변경
+//		            setPanel2ButtonsEnabled(false);
+//		            playBtn.repaint(); // 버튼을 갱신
+//		            
+//		            
+//
+//		            // Iterate through each row (beat)
+//		            for (int row = 0; row < 10; row++) {
+//		                String note = clickedButtons[row];
+//
+//		                // Check if the note is not an empty string
+//		                if (note!="  ") {
+//		                	try {
+//		                        // Load the audio file for the specific note
+//		                        URL soundUrl = GUI.class.getResource("/sound/" + note + ".wav");
+//		                        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundUrl);
+//		                        Clip clip = AudioSystem.getClip();
+//		                        clip.open(audioInputStream);
+//
+//		                        // Start playing the clip
+//		                        clip.start();
+//
+//		                        // Sleep for 2 seconds (adjust the duration as needed)
+//		                        Thread.sleep((long) (300*(60/Metronome.bpm)));
+//		                    } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
+//		                        e1.printStackTrace();
+//		                    }
+//		                }else {
+//		                	try {
+//								Thread.sleep((long) (500*(60/Metronome.bpm)));
+//							} catch (InterruptedException e1) {
+//								// TODO Auto-generated catch block
+//								e1.printStackTrace();
+//							}
+//		                }
+//
+//		                // Sleep for 1 second before playing the next note
+////		                try {
+////		                    Thread.sleep(1000);
+////		                } catch (InterruptedException ex) {
+////		                    ex.printStackTrace();
+////		                }
+//		            }
+//
+//		            // After playing, set playBtn text to "PLAY" and enable panel_2 buttons
+//		            playBtn.setText("Play");
+//		            playBtn.repaint(); // 버튼을 갱신
+//		            setPanel2ButtonsEnabled(true);
+//		        }
+//		    }
+//		});
+//
+//
+//		
+//
+		
 		playBtn.addActionListener(new ActionListener() {
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
 		        // Check if already playing
-		        if (playBtn.getText().equals("PLAY")) {
-		            // Set playBtn text to "playing" and disable panel_2 buttons
-		            playBtn.setText("Playing");
+		        if (playStatusLabel.getText().equals("Play")) {
+		            playStatusLabel.setText("Playing");
+		            playStatusLabel.setForeground(Color.RED); // Set text color to red
 		            setPanel2ButtonsEnabled(false);
-		            
 
-		            // Iterate through each row (beat)
-		            for (int row = 0; row < 10; row++) {
-		                String note = clickedButtons[row];
+		            // Start a new thread for playing sounds
+		            new Thread(() -> {
+		                for (int row = 0; row < 10; row++) {
+		                    String note = clickedButtons[row];
 
-		                // Check if the note is not an empty string
-		                if (!note.trim().isEmpty()) {
-		                    // Play the note sound
-		                    playNoteSound(note);
+		                    if (!note.equals("  ")) {
+		                        try {
+		                            URL soundUrl = GUI.class.getResource("/sound/" + note + ".wav");
+		                            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundUrl);
+		                            Clip clip = AudioSystem.getClip();
+		                            clip.open(audioInputStream);
+
+		                            // Start playing the clip
+		                            clip.start();
+
+		                            // Sleep for the duration of the sound
+		                            Thread.sleep((long) (300 * (60 / Metronome.bpm)));
+		                        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
+		                            e1.printStackTrace();
+		                        }
+		                    } else {
+		                        try {
+		                            // Sleep for an empty beat
+		                            Thread.sleep((long) (500 * (60 / Metronome.bpm)));
+		                        } catch (InterruptedException e1) {
+		                            e1.printStackTrace();
+		                        }
+		                    }
 		                }
 
-		                // Sleep for 1 second before playing the next note
-		                try {
-		                    Thread.sleep(1000);
-		                } catch (InterruptedException ex) {
-		                    ex.printStackTrace();
-		                }
-		            }
-
-		            // After playing, set playBtn text to "PLAY" and enable panel_2 buttons
-		            playBtn.setText("PLAY");
-		            setPanel2ButtonsEnabled(true);
+		                // After playing, set playBtn text to "Play" and enable panel_2 buttons
+		                SwingUtilities.invokeLater(() -> {
+		                    playStatusLabel.setText("Play");
+		                    playStatusLabel.setForeground(Color.BLACK); // Set text color back to black
+		                    setPanel2ButtonsEnabled(true);
+		                });
+		            }).start();
 		        }
 		    }
 		});
-
-
-		
 
 		for (String label : labels) {
 		 panel_3.add(DefaultComponentFactory.getInstance().createLabel(label));
@@ -384,8 +474,12 @@ public class GUI extends JFrame {
             for (int row = 0; row < 10; row++) {
                 buttons[col][row] = createButton(col, row, buttonWidth, buttonHeight);
                 panel_2.add(buttons[col][row]);
+                //buttons[col][row].addActionListener(e -> handlePanel2ButtonClick(col, row));
+            
             }
         }
+        
+        
 
 		toggleHandler handler = new toggleHandler();
 	    onOffBtn.addActionListener(handler);
@@ -407,6 +501,8 @@ public class GUI extends JFrame {
 	        }
 	    }
 	}
+	
+	
 	// Method to play the sound of a specific note
     private void playNoteSound(String note) {
     	try {
@@ -531,8 +627,6 @@ public class GUI extends JFrame {
     private void updateBPMLabel() {
         bpmLabel.setText("BPM: " + Metronome.bpm);
     }
-    
-    
 	 }
 
 
