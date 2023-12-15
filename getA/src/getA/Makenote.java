@@ -32,11 +32,13 @@ import java.awt.event.ActionEvent;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
 
-
+//Class definition for the 'Makenote' JFrame
 public class Makenote extends JFrame implements ActionListener, MetronomeListener {
-//	private DrumGUI drumGUI;
 
+	// Serialization ID
 	private static final long serialVersionUID = 1L;
+	
+	// GUI components
 	private JPanel contentPane;
 	private JButton onOffBtn;
 	private JLabel bpmLabel;
@@ -73,9 +75,9 @@ public class Makenote extends JFrame implements ActionListener, MetronomeListene
 	 */
 	public Makenote() {
 		
-//		drumGUI = new DrumGUI();
-		
 
+		
+		// Set up the JFrame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 842, 453);
 		contentPane = new JPanel();
@@ -84,30 +86,25 @@ public class Makenote extends JFrame implements ActionListener, MetronomeListene
 		contentPane.setLayout(null);
 		setContentPane(contentPane);
         
-//		JLabel lblNewJgoodiesLabel = DefaultComponentFactory.getInstance().createLabel("Get a Piano");
+		// GUI components initialization
 		JLabel lblNewJgoodiesLabel = new JLabel("Get a Piano");
 		lblNewJgoodiesLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		lblNewJgoodiesLabel.setForeground(Color.BLACK);
 		lblNewJgoodiesLabel.setBounds(381, 6, 113, 28);
 		contentPane.add(lblNewJgoodiesLabel);
-//		
+	
 
+		// Metronome control panel
+		JPanel metroPanel = new JPanel();
+		metroPanel.setBackground(Color.WHITE);
+		metroPanel.setBounds(736, 266, 106, 149);
+		contentPane.add(metroPanel);
+		metroPanel.setLayout(null);
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(Color.WHITE);
-		panel_1.setBounds(736, 266, 106, 149);
-		contentPane.add(panel_1);
-		panel_1.setLayout(null);
-		
-		  metronome = new Metronome(); // Pass 'this' as BpmChangeListener
-	        metronome.setMetronomeListener(this);
-	        metronome.start();
-	        metronome.end();
-
-	        bpmLabel = new JLabel("BPM: " + metronome.getId()); // Initialize with the initial BPM value
-	        bpmLabel.setBounds(6, 123, 77, 20);
-	        panel_1.add(bpmLabel);
-			
+		metronome = new Metronome(); // Pass 'this' as BpmChangeListener
+	    metronome.setMetronomeListener(this);
+	    metronome.start();
+	    metronome.end();			
 
 		
 		onOffBtn = new JButton("");
@@ -116,58 +113,52 @@ public class Makenote extends JFrame implements ActionListener, MetronomeListene
 		onOffBtn.setIcon(new ImageIcon(GUI.class.getResource("/img/metronome.png")));
 		onOffBtn.setBounds(6, 6, 94, 84);
 		onOffBtn.addActionListener(new ToggleHandler());
-		panel_1.add(onOffBtn);
-		
-		JButton plusBtn = new JButton("+");
-		plusBtn.setBounds(16, 89, 41, 29);
-		panel_1.add(plusBtn);
-		
-		JButton minusBtn = new JButton("-");
-		minusBtn.setBounds(52, 89, 41, 29);
-		panel_1.add(minusBtn);
-		
-//		bpmLabel = new JLabel("BPM: " + Metronome.bpm);
-//		bpmLabel.setHorizontalAlignment(SwingConstants.CENTER);
-//		bpmLabel.setBounds(6, 123, 97, 20);
-//		panel_1.add(bpmLabel);
+		metroPanel.add(onOffBtn);
 		
 		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBounds(37, 143, 698, 272);
-		contentPane.add(panel_2);
-		panel_2.setLayout(null);
+
 		
-		JPanel panel_3 = new JPanel();
-		panel_3.setBounds(16, 143, 19, 272);
-		contentPane.add(panel_3);
-		panel_3.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		// Note panel
+		JPanel notePanel = new JPanel();
+		notePanel.setBounds(37, 143, 698, 272);
+		contentPane.add(notePanel);
+		notePanel.setLayout(null);
 		
-		JPanel panel_4 = new JPanel();
-		panel_4.setBounds(16, 59, 719, 82);
-		contentPane.add(panel_4);
-		panel_4.setLayout(null);
+		//label panel
+		JPanel instrumentLabelPanel = new JPanel();
+		instrumentLabelPanel.setBounds(16, 143, 19, 272);
+		contentPane.add(instrumentLabelPanel);
+		instrumentLabelPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		// Text area for displaying clicked buttons
+		JPanel scorePanel = new JPanel();
+		scorePanel.setBounds(16, 59, 719, 82);
+		contentPane.add(scorePanel);
+		scorePanel.setLayout(null);
 		
 		textArea = new JTextArea();
 		textArea.setBounds(6, 5, 711, 71);
-		panel_4.add(textArea);
+		scorePanel.add(textArea);
 		
-		JPanel panel_5 = new JPanel();
-		panel_5.setBackground(Color.WHITE);
-		panel_5.setBounds(736, 211, 106, 56);
-		contentPane.add(panel_5);
-		panel_5.setLayout(null);
+		// Play control panel
+		JPanel playStatusPanel = new JPanel();
+		playStatusPanel.setBackground(Color.WHITE);
+		playStatusPanel.setBounds(736, 211, 106, 56);
+		contentPane.add(playStatusPanel);
+		playStatusPanel.setLayout(null);
 		
-//		JLabel playStatusLabel = DefaultComponentFactory.getInstance().createLabel("Play");
+
 		JLabel playStatusLabel = new JLabel("Play");
 		playStatusLabel.setBounds(59, 15, 47, 25);
-		panel_5.add(playStatusLabel);
+		playStatusPanel.add(playStatusLabel);
 		playStatusLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		JButton playBtn = new JButton("");
 		playBtn.setBounds(6, 6, 47, 42);
-		panel_5.add(playBtn);
+		playStatusPanel.add(playBtn);
 		playBtn.setIcon(new ImageIcon(GUI.class.getResource("/img/play.png")));
 		
+		// File control panel
 		JPanel panel = new JPanel();
 		panel.setBounds(736, 143, 106, 66);
 		contentPane.add(panel);
@@ -179,7 +170,7 @@ public class Makenote extends JFrame implements ActionListener, MetronomeListene
 		panel.add(makeFileBtn);
 		
 
-		
+		// Play button action listener
 		playBtn.addActionListener(new ActionListener() {
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
@@ -191,6 +182,7 @@ public class Makenote extends JFrame implements ActionListener, MetronomeListene
 
 		            // Start a new thread for playing sounds
 		            new Thread(() -> {
+		            	// Thread for playing sounds
 		                for (int col = 0; col < 32; col++) {
 		                    String note = clickedButtons[col];
 
@@ -219,7 +211,7 @@ public class Makenote extends JFrame implements ActionListener, MetronomeListene
 		                    }
 		                }
 
-		                // After playing, set playBtn text to "Play" and enable panel_2 buttons
+		                // After playing, set playBtn text to "Play" and enable notePanel buttons
 		                SwingUtilities.invokeLater(() -> {
 		                    playStatusLabel.setText("Play");
 		                    playStatusLabel.setForeground(Color.BLACK); // Set text color back to black
@@ -230,44 +222,28 @@ public class Makenote extends JFrame implements ActionListener, MetronomeListene
 		    }
 		});
 
-//		for (String label : labels) {
-//			
-//		 panel_3.add(DefaultComponentFactory.getInstance().createLabel(label));
-//		}
 		for (String label : labels) {
 		    JLabel labelComponent = new JLabel(label);
-		    panel_3.add(labelComponent);
+		    instrumentLabelPanel.add(labelComponent);
 		}
 
 		
 		// Create buttons array
         buttons = new JButton[32][13];
         
-        int buttonWidth = panel_2.getWidth() / 32;
-        int buttonHeight = panel_2.getHeight() / 13;
+        int buttonWidth = notePanel.getWidth() / 32;
+        int buttonHeight = notePanel.getHeight() / 13;
 
-     // Populate buttons in panel_2
+     // Populate buttons in notePanel
         for (int col = 0; col < 32; col++) {
             for (int row = 0; row < 13; row++) {
                 buttons[col][row] = createButton(col, row, buttonWidth, buttonHeight);
-                panel_2.add(buttons[col][row]);
-                //buttons[col][row].addActionListener(e -> handlePanel2ButtonClick(col, row));
+                 notePanel.add(buttons[col][row]);
             
             }
         }
         
-//        
-//
-//		toggleHandler handler = new toggleHandler();
-//	    onOffBtn.addActionListener(handler);
-//
-//	    plusHandler plusHandle = new plusHandler();
-//	    plusBtn.addActionListener(plusHandle);
-//
-//	    minusHandler minusHandle = new minusHandler();
-//	    minusBtn.addActionListener(minusHandle);
-	    
-	 // Add an ActionListener to makeFileBtn
+     // File button action listener
         makeFileBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -277,6 +253,7 @@ public class Makenote extends JFrame implements ActionListener, MetronomeListene
 	    
 	}
 	
+	// Method to save the clicked buttons to a file
 	private void saveToFile() {
         try {
             // Choose a file to save
@@ -300,7 +277,7 @@ public class Makenote extends JFrame implements ActionListener, MetronomeListene
         }
     }
 	
-	// Add a method to enable/disable panel_2 buttons
+	// Add a method to enable/disable notePanel buttons
 	private void setPanel2ButtonsEnabled(boolean enabled) {
 	    for (int col = 0; col < 32; col++) {
 	        for (int row = 0; row < 13; row++) {
@@ -323,7 +300,7 @@ public class Makenote extends JFrame implements ActionListener, MetronomeListene
         }
     }
 
-	//button handler
+ // Method to create a button in notePanel
 	private JButton createButton(int col, int row, int buttonWidth, int buttonHeight) {
         JButton button = new JButton(defaultImg);
 
@@ -338,7 +315,7 @@ public class Makenote extends JFrame implements ActionListener, MetronomeListene
 
     }
 
-
+	// Method to handle button clicks in notePanel
 	private void handleButtonClick(int col, int row) {
 	    JButton currentButton = buttons[col][row];
 
@@ -361,16 +338,13 @@ public class Makenote extends JFrame implements ActionListener, MetronomeListene
 	        }
 	    }
 
-	    // Update textPane in panel_4
+	    // Update textPane in scorePanel
 	    updateTextPane();
 	}
 
-	
+	// Method to update the textPane in scorePanel
 	private void updateTextPane() {
 	    StringBuilder text = new StringBuilder();
-	    
-	    // Sort clickedButtons based on row in descending order
-	    //clickedButtons.sort((a, b) -> Integer.compare(b[1], a[1]));
 
 	    // Iterate through clickedButtons and append corresponding note names to text
 	    for (String info : clickedButtons) {
@@ -381,11 +355,14 @@ public class Makenote extends JFrame implements ActionListener, MetronomeListene
 	    textArea.setText(text.toString());
 	}
 	
+	// Method to get the note name based on the row
 	private String getNoteName(int row) {
 	    row = Math.max(0, Math.min(row, labels.length - 1));
 
 	    return labels[row];
 	}
+	
+	// ActionListener for the metronome toggle
 	private class ToggleHandler implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -402,12 +379,15 @@ public class Makenote extends JFrame implements ActionListener, MetronomeListene
         // Update your BPM label or any other UI component
         bpmLabel.setText("BPM: " + bpm);
     }
+	
+	// MetronomeListener interface method (unused in this implementation)
 	@Override
 	public void onMetronomeTick() {
 		// TODO Auto-generated method stub
 		
 	}
 
+	// ActionListener interface method (unused in this implementation)
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -416,53 +396,6 @@ public class Makenote extends JFrame implements ActionListener, MetronomeListene
 	
 }
 
-//
-//	
-//	private class toggleHandler implements ActionListener {
-//	    private Metronome metro;
-//
-//	    @Override
-//	    public void actionPerformed(java.awt.event.ActionEvent e) {
-//	        if (e.getActionCommand().equals("onOffBtn")) {
-//	            if (metro == null) {
-//	                metro = new Metronome();
-//	                Thread t = new Thread(metro);
-//	                t.start();
-//	            } else {
-//	                metro.end();
-//	                metro = null;
-//	            }
-//	        }
-//	    }
-//
-//	}
-//	
-//	
-//
-//	private class plusHandler implements ActionListener
-//	{
-//	    @Override
-//	    public void actionPerformed(java.awt.event.ActionEvent e)
-//	    {
-//	        Metronome.bpm++;
-//	        updateBPMLabel();
-//	    }
-//	}
-//
-//	private class minusHandler implements ActionListener
-//	{
-//	    @Override
-//	    public void actionPerformed(java.awt.event.ActionEvent e)
-//	    {
-//	        Metronome.bpm--;
-//	        updateBPMLabel();
-//	    }
-//	}
-//	// Add this method to update the BPM label
-//    private void updateBPMLabel() {
-//        bpmLabel.setText("BPM: " + Metronome.bpm);
-//    }
-//	 }
 
 
 

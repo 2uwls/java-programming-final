@@ -1,3 +1,5 @@
+
+// Import necessary packages
 package getA;
 import java.awt.EventQueue;
 
@@ -30,15 +32,16 @@ import java.awt.event.ActionEvent;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
 
-
+//Define the Drum class that extends JFrame, implements ActionListener, and MetronomeListener
 public class Drum extends JFrame implements ActionListener, MetronomeListener {
 
+	// Serialization ID
 	private static final long serialVersionUID = 1L;
+	// Components for the GUI
 	private JPanel contentPane;
 	private JButton onOffBtn;
-	private JLabel bpmLabel;
 	//for note panel
-	private JButton[][] buttons;
+	private JButton[][] buttons;// 2D array for note buttons
     private ImageIcon defaultImg = new ImageIcon(Drum.class.getResource("/img/pinoNoteBg1.png"));
     private ImageIcon beginImg = new ImageIcon(Drum.class.getResource("/img/pinoNoteBgBegin.png"));
     private String[] clickedButtons = {"  ", "  ", "  ", "  ", "  ", "  ","  ","  ","  ","  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ","  ","  ","  ","  ", "  ", "  ", "  ", "  ","  ","  ","  ","  ", };
@@ -49,9 +52,7 @@ public class Drum extends JFrame implements ActionListener, MetronomeListener {
 
 
 
-	/**
-	 * Launch the application.
-	 */
+	// Main method to launch the Drum GUI
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -65,23 +66,19 @@ public class Drum extends JFrame implements ActionListener, MetronomeListener {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
+	// Constructor for the Drum class
 	public Drum() {
 		
-
+		// Set up the JFrame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 842, 453);
-		
-	
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
 		setContentPane(contentPane);
         
-//		JLabel lblNewJgoodiesLabel = DefaultComponentFactory.getInstance().createLabel("Get a Drum");
+		// Create and add a label for the title
 		JLabel lblNewJgoodiesLabel = new JLabel("Get a Drum");
 		lblNewJgoodiesLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		lblNewJgoodiesLabel.setForeground(Color.BLACK);
@@ -89,108 +86,101 @@ public class Drum extends JFrame implements ActionListener, MetronomeListener {
 		contentPane.add(lblNewJgoodiesLabel);
 		
 
-		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(Color.WHITE);
-		panel_1.setBounds(736, 266, 106, 149);
-		contentPane.add(panel_1);
-		panel_1.setLayout(null);
+		// Create and configure the metronome controls panel
+		JPanel metroPanel = new JPanel();
+		metroPanel.setBackground(Color.WHITE);
+		metroPanel.setBounds(736, 266, 106, 149);
+		contentPane.add(metroPanel);
+		metroPanel.setLayout(null);
 
-		
+		// Create and configure the metronome on/off button
 		onOffBtn = new JButton("");
 		onOffBtn.setBackground(new Color(255, 255, 255));
 		onOffBtn.addActionListener(new ToggleHandler());
 		onOffBtn.setIcon(new ImageIcon(Drum.class.getResource("/img/metronome.png")));
 		onOffBtn.setBounds(6, 6, 94, 84);
-		panel_1.add(onOffBtn);
+		metroPanel.add(onOffBtn);
 		
+		// Create and configure metronome controls
+		metronome = new Metronome(); // Pass 'this' as BpmChangeListener
+	    metronome.setMetronomeListener(this);
+	    metronome.start();
+	    metronome.end();
 
-		  metronome = new Metronome(); // Pass 'this' as BpmChangeListener
-	        metronome.setMetronomeListener(this);
-
-	        metronome.start();
-	        metronome.end();
-
-		
-		JButton plusBtn = new JButton("+");
-		plusBtn.setBounds(16, 89, 41, 29);
-		panel_1.add(plusBtn);
-		
-		JButton minusBtn = new JButton("-");
-		minusBtn.setBounds(52, 89, 41, 29);
-		panel_1.add(minusBtn);
-		
-		bpmLabel = new JLabel("BPM: " + Metronome.bpm);
-		bpmLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		bpmLabel.setBounds(6, 123, 97, 20);
-		panel_1.add(bpmLabel);
 		
 		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBounds(100, 143, 635, 272);
-		contentPane.add(panel_2);
-		panel_2.setLayout(null);
 		
-		JPanel panel_3 = new JPanel();
-		panel_3.setBounds(16, 143, 83, 272);
-		contentPane.add(panel_3);
-		panel_3.setLayout(new GridLayout(0, 1, 0, 0));
+		// Create and configure the note display panel
+		JPanel notePanel = new JPanel();
+		notePanel.setBounds(100, 143, 635, 272);
+		contentPane.add(notePanel);
+		notePanel.setLayout(null);
 		
+		// Create and configure the instrument labels panel
+		JPanel instrumentLabelPanel = new JPanel();
+		instrumentLabelPanel.setBounds(16, 143, 83, 272);
+		contentPane.add(instrumentLabelPanel);
+		instrumentLabelPanel.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		// Labels for different instruments
 		JLabel hihtatLabel = new JLabel("");
 		hihtatLabel.setIcon(new ImageIcon(Drum.class.getResource("/img/hihat.png")));
-		panel_3.add(hihtatLabel);
+		instrumentLabelPanel.add(hihtatLabel);
 		
 		JLabel kickLabel = new JLabel("");
 		kickLabel.setIcon(new ImageIcon(Drum.class.getResource("/img/kick.png")));
-		panel_3.add(kickLabel);
+		instrumentLabelPanel.add(kickLabel);
 		
 		JLabel percuLabel = new JLabel("");
 		percuLabel.setIcon(new ImageIcon(Drum.class.getResource("/img/percu.png")));
-		panel_3.add(percuLabel);
+		instrumentLabelPanel.add(percuLabel);
 		
 		JLabel snareLabel = new JLabel("");
 		snareLabel.setIcon(new ImageIcon(Drum.class.getResource("/img/snare.png")));
-		panel_3.add(snareLabel);
+		instrumentLabelPanel.add(snareLabel);
 		
-		JPanel panel_4 = new JPanel();
-		panel_4.setBounds(16, 59, 719, 82);
-		contentPane.add(panel_4);
-		panel_4.setLayout(null);
+		
+		// Create and configure the text area for note display
+		JPanel scorePanel = new JPanel();
+		scorePanel.setBounds(16, 59, 719, 82);
+		contentPane.add(scorePanel);
+		scorePanel.setLayout(null);
 		
 		textArea = new JTextArea();
 		textArea.setBounds(6, 5, 711, 71);
-		panel_4.add(textArea);
+		scorePanel.add(textArea);
 
+		// Create and configure the play status panel
+		JPanel playStatusPanel = new JPanel();
+		playStatusPanel.setBackground(Color.WHITE);
+		playStatusPanel.setBounds(736, 211, 106, 56);
+		contentPane.add(playStatusPanel);
+		playStatusPanel.setLayout(null);
 		
-		JPanel panel_5 = new JPanel();
-		panel_5.setBackground(Color.WHITE);
-		panel_5.setBounds(736, 211, 106, 56);
-		contentPane.add(panel_5);
-		panel_5.setLayout(null);
-		
-//		JLabel playStatusLabel = DefaultComponentFactory.getInstance().createLabel("Play");
+
 		JLabel playStatusLabel = new JLabel("Play");
 		playStatusLabel.setBounds(59, 15, 47, 25);
-		panel_5.add(playStatusLabel);
+		playStatusPanel.add(playStatusLabel);
 		playStatusLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		JButton playBtn = new JButton("");
 		playBtn.setBounds(6, 6, 47, 42);
-		panel_5.add(playBtn);
+		playStatusPanel.add(playBtn);
 		playBtn.setIcon(new ImageIcon(Drum.class.getResource("/img/play.png")));
 		
-		JPanel panel = new JPanel();
-		panel.setBounds(736, 143, 106, 66);
-		contentPane.add(panel);
-		panel.setLayout(null);
+		// Create and configure the make file button panel
+		JPanel makeFilePanel = new JPanel();
+		makeFilePanel.setBounds(736, 143, 106, 66);
+		contentPane.add(makeFilePanel);
+		makeFilePanel.setLayout(null);
 		
 		JButton makeFileBtn = new JButton("MakeFile");
 		makeFileBtn.setHorizontalAlignment(SwingConstants.LEADING);
 		makeFileBtn.setBounds(0, 6, 106, 55);
-		panel.add(makeFileBtn);
+		makeFilePanel.add(makeFileBtn);
 		
 
-		
+		//add an actionListener to play the score that you made
 		playBtn.addActionListener(new ActionListener() {
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
@@ -246,16 +236,14 @@ public class Drum extends JFrame implements ActionListener, MetronomeListener {
 		// Create buttons array
         buttons = new JButton[32][4];
         
-        int buttonWidth = panel_2.getWidth() / 32;
-        int buttonHeight = panel_2.getHeight() / 4;
+        int buttonWidth = notePanel.getWidth() / 32;
+        int buttonHeight = notePanel.getHeight() / 4;
 
      // Populate buttons in panel_2
         for (int col = 0; col < 32; col++) {
             for (int row = 0; row < 4; row++) {
                 buttons[col][row] = createButton(col, row, buttonWidth, buttonHeight);
-                panel_2.add(buttons[col][row]);
-                //buttons[col][row].addActionListener(e -> handlePanel2ButtonClick(col, row));
-            
+                notePanel.add(buttons[col][row]);            
             }
         }
 
@@ -267,11 +255,11 @@ public class Drum extends JFrame implements ActionListener, MetronomeListener {
                 saveToFile();
             }
         });
-        
+     // Display the frame
         setVisible(true);
 	    
 	}
-	
+	 // Method to save clicked buttons to a file
 	private void saveToFile() {
         try {
             // Choose a file to save
@@ -295,7 +283,7 @@ public class Drum extends JFrame implements ActionListener, MetronomeListener {
         }
     }
 	
-	// Add a method to enable/disable panel_2 buttons
+	// Method to enable/disable notePanel buttons
 	private void setPanel2ButtonsEnabled(boolean enabled) {
 	    for (int col = 0; col < 32; col++) {
 	        for (int row = 0; row < 4; row++) {
@@ -307,7 +295,7 @@ public class Drum extends JFrame implements ActionListener, MetronomeListener {
 	
 
 
-	//button handler
+	// Method to create a button in notePanel
 	private JButton createButton(int col, int row, int buttonWidth, int buttonHeight) {
         JButton button = new JButton(defaultImg);
 
@@ -322,7 +310,7 @@ public class Drum extends JFrame implements ActionListener, MetronomeListener {
 
     }
 
-
+	// Method to handle button clicks in notePanel
 	private void handleButtonClick(int col, int row) {
 	    JButton currentButton = buttons[col][row];
 
@@ -345,16 +333,15 @@ public class Drum extends JFrame implements ActionListener, MetronomeListener {
 	        }
 	    }
 
-	    // Update textPane in panel_4
+	    // Update in scorePanel
 	    updateTextPane();
 	}
 
-	
+	// Method to update the textPane in scorePanel
 	private void updateTextPane() {
 	    StringBuilder text = new StringBuilder();
 	    
-	    // Sort clickedButtons based on row in descending order
-	    //clickedButtons.sort((a, b) -> Integer.compare(b[1], a[1]));
+	   
 
 	    // Iterate through clickedButtons and append corresponding note names to text
 	    for (String info : clickedButtons) {
@@ -364,7 +351,7 @@ public class Drum extends JFrame implements ActionListener, MetronomeListener {
 	    // Update textPane with the generated text
 	    textArea.setText(text.toString());
 	}
-	
+	// Method to get the note name based on the row
 	private String getNoteName(int row) {
 	    row = Math.max(0, Math.min(row, labels.length - 1));
 
@@ -372,17 +359,16 @@ public class Drum extends JFrame implements ActionListener, MetronomeListener {
 	}
 
 
-	
+	// ActionListener for the metronome toggle
 	private class ToggleHandler implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (metronome.isRunning()) {
                 metronome.end();
             } else {
-//            	metronome.startMetronome();
             	
-                metronome = new Metronome();
-                metronome.setMetronomeListener(Drum.this);
+                metronome = new Metronome(); // Create a new Metronome instance
+                metronome.setMetronomeListener(Drum.this); // Register Drum as a listener
              
                 metronome.start();
             }
@@ -390,13 +376,14 @@ public class Drum extends JFrame implements ActionListener, MetronomeListener {
     }
 	
 
-
+	// ActionListener interface method (unused in this implementation)
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	// MetronomeListener interface method (unused in this implementation)
 	@Override
 	public void onMetronomeTick() {
 		// TODO Auto-generated method stub
