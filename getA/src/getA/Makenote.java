@@ -102,6 +102,7 @@ public class Makenote extends JFrame implements ActionListener, MetronomeListene
 		  metronome = new Metronome(); // Pass 'this' as BpmChangeListener
 	        metronome.setMetronomeListener(this);
 	        metronome.start();
+	        metronome.end();
 
 	        bpmLabel = new JLabel("BPM: " + metronome.getId()); // Initialize with the initial BPM value
 	        bpmLabel.setBounds(6, 123, 77, 20);

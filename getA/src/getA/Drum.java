@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.border.EmptyBorder;
 
+
 //import com.jgoodies.forms.factories.DefaultComponentFactory;
 
 import java.awt.Color;
@@ -30,7 +31,7 @@ import java.io.FileOutputStream;
 import java.io.PrintWriter;
 
 
-public class Drum extends JFrame implements ActionListener {
+public class Drum extends JFrame implements ActionListener, MetronomeListener {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -43,6 +44,8 @@ public class Drum extends JFrame implements ActionListener {
     private String[] clickedButtons = {"  ", "  ", "  ", "  ", "  ", "  ","  ","  ","  ","  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ","  ","  ","  ","  ", "  ", "  ", "  ", "  ","  ","  ","  ","  ", };
 	private JTextArea textArea;
 	private String[] labels = {"hihat", "kick", "percu", "snare"};
+	
+	private Metronome metronome;
 
 
 
@@ -96,13 +99,18 @@ public class Drum extends JFrame implements ActionListener {
 		
 		onOffBtn = new JButton("");
 		onOffBtn.setBackground(new Color(255, 255, 255));
-		onOffBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		onOffBtn.addActionListener(new ToggleHandler());
 		onOffBtn.setIcon(new ImageIcon(Drum.class.getResource("/img/metronome.png")));
 		onOffBtn.setBounds(6, 6, 94, 84);
 		panel_1.add(onOffBtn);
+		
+
+		  metronome = new Metronome(); // Pass 'this' as BpmChangeListener
+	        metronome.setMetronomeListener(this);
+
+	        metronome.start();
+	        metronome.end();
+
 		
 		JButton plusBtn = new JButton("+");
 		plusBtn.setBounds(16, 89, 41, 29);
@@ -365,29 +373,32 @@ public class Drum extends JFrame implements ActionListener {
 
 
 	
-	private class toggleHandler implements ActionListener {
-	    private Metronome metro;
-
-	    @Override
-	    public void actionPerformed(java.awt.event.ActionEvent e) {
-	        if (e.getActionCommand().equals("onOffBtn")) {
-	            if (metro == null) {
-	                metro = new Metronome();
-	                Thread t = new Thread(metro);
-	                t.start();
-	            } else {
-	                metro.end();
-	                metro = null;
-	            }
-	        }
-	    }
-
-	}
-
+	private class ToggleHandler implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (metronome.isRunning()) {
+                metronome.end();
+            } else {
+//            	metronome.startMetronome();
+            	
+                metronome = new Metronome();
+                metronome.setMetronomeListener(Drum.this);
+             
+                metronome.start();
+            }
+        }
+    }
+	
 
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onMetronomeTick() {
 		// TODO Auto-generated method stub
 		
 	}

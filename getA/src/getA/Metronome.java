@@ -93,25 +93,31 @@ public class Metronome extends Thread {
     static double bpm = 60;
     private boolean keepRunning;
     private MetronomeListener metronomeListener;
-    private BpmChangeListener bpmChangeListener;
+    private ActionListener plusHandler;
+    private ActionListener minusHandler;
 
     public Metronome() {
-        this.keepRunning = false;
+        this.keepRunning = true;
         this.metronomeListener = null;
-        this.bpmChangeListener = null;
+        
+        this.plusHandler = new PlusHandler();
+        this.minusHandler = new MinusHandler();
     }
-
+    
     public void setMetronomeListener(MetronomeListener listener) {
-//        this.keepRunning = true;
+        
         this.metronomeListener = listener;
     }
-
-    public void setBpmChangeListener(BpmChangeListener listener) {
-        this.bpmChangeListener = listener;
-    }
-
+    
     public boolean isRunning() {
         return keepRunning;
+    }
+    
+    public void startMetronome() {
+        if (!keepRunning) {
+            keepRunning = true;
+            start();
+        }
     }
 
     public void end() {
@@ -143,12 +149,25 @@ public class Metronome extends Thread {
         clip.open(audioInputStream);
         clip.start();
     }
+   
 
-    public void setBpm(double bpm) {
-        this.bpm = bpm;
-        if (bpmChangeListener != null) {
-            bpmChangeListener.onBpmChange(bpm);
+    // PlusHandler and MinusHandler classes
+    private class PlusHandler implements ActionListener {
+        @Override
+        public void actionPerformed(java.awt.event.ActionEvent e) {
+            Metronome.bpm++;
+      
         }
     }
+
+    private class MinusHandler implements ActionListener {
+        @Override
+        public void actionPerformed(java.awt.event.ActionEvent e) {
+            Metronome.bpm--;
+        
+        }
+    }
+
+   
 }
 

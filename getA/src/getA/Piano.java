@@ -480,7 +480,9 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 		
 		  metronome = new Metronome(); // Pass 'this' as BpmChangeListener
 	        metronome.setMetronomeListener(this);
+
 	        metronome.start();
+	        metronome.end();
 
 	        bpmLabel = new JLabel("BPM: " + metronome.getId()); // Initialize with the initial BPM value
 	        bpmLabel.setBounds(6, 123, 77, 20);
@@ -488,7 +490,6 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 	        
 		onOffBtn = new JButton("onOffBtn");
 		onOffBtn.setBackground(new Color(255, 255, 255));
-
 		
 		onOffBtn.setIcon(new ImageIcon(GUI.class.getResource("/img/metronome.png")));
 		onOffBtn.setBounds(6, 6, 77, 84);
@@ -496,10 +497,13 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 		panel_1.add(onOffBtn);
 		
 		JButton plusBtn = new JButton("+");
+
+		
 		plusBtn.setBounds(6, 89, 41, 29);
 		panel_1.add(plusBtn);
 		
 		JButton minusBtn = new JButton("-");
+	
 		minusBtn.setBounds(42, 89, 41, 29);
 		panel_1.add(minusBtn);
 //		
@@ -729,17 +733,19 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
             if (metronome.isRunning()) {
                 metronome.end();
             } else {
+//            	metronome.startMetronome();
+            	
                 metronome = new Metronome();
                 metronome.setMetronomeListener(Piano.this);
+             
                 metronome.start();
             }
         }
     }
-	public void onBpmChange(double bpm) {
-        // Update your BPM label or any other UI component
-        bpmLabel.setText("BPM: " + bpm);
-    }
 	
+	
+	
+
 
 
 	
