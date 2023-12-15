@@ -63,7 +63,7 @@ public class GUI extends JFrame implements ActionListener {
 //            disposeMain();
         } else if (e.getSource() == drumMenu) {
             new Drum();
-            disposeMain();
+//            disposeMain();
         }
     }
 

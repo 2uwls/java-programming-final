@@ -85,10 +85,11 @@ public class Makenote extends JFrame implements ActionListener, MetronomeListene
 		setContentPane(contentPane);
         
 //		JLabel lblNewJgoodiesLabel = DefaultComponentFactory.getInstance().createLabel("Get a Piano");
-//		lblNewJgoodiesLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-//		lblNewJgoodiesLabel.setForeground(Color.BLACK);
-//		lblNewJgoodiesLabel.setBounds(381, 6, 113, 28);
-//		contentPane.add(lblNewJgoodiesLabel);
+		JLabel lblNewJgoodiesLabel = new JLabel("Get a Piano");
+		lblNewJgoodiesLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+		lblNewJgoodiesLabel.setForeground(Color.BLACK);
+		lblNewJgoodiesLabel.setBounds(381, 6, 113, 28);
+		contentPane.add(lblNewJgoodiesLabel);
 //		
 
 		

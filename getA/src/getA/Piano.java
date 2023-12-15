@@ -141,22 +141,47 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 		panel.setLayout(null);
 		
 		JButton blackKey1 = new JButton("");
+		blackKey1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				playSound("C#.wav");
+				   if (isRecording) {
+					   String pitchName = ((JButton) e.getSource()).getName();
+			           recordNote(pitchName);
+			            System.out.printf("%s", pitchName);
+			        }
+			}
+
+			
+		});
 		blackKey1.setForeground(new Color(0, 0, 0));
 		blackKey1.setBackground(new Color(0, 0, 0));
 		blackKey1.setIcon(new ImageIcon(GUI.class.getResource("/img/blackKey.png")));
+		
 		blackKey1.setBounds(28, 6, 34, 73);
 		panel.add(blackKey1);
 		
 		JButton blackKey2 = new JButton("");
+		blackKey2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				playSound("D#.wav");
+				   if (isRecording) {
+					   String pitchName = ((JButton) e.getSource()).getName();
+			           recordNote(pitchName);
+			            System.out.printf("%s", pitchName);
+			        }
+			}
+
+			
+		});
 		blackKey2.setIcon(new ImageIcon(GUI.class.getResource("/img/blackKey.png")));
 		blackKey2.setBounds(66, 6, 34, 73);
 		panel.add(blackKey2);
 		
 		JButton btnNewButton = new JButton("");
-		btnNewButton.setName("btnNewButton");
+		btnNewButton.setName("C");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				playSound("wor/sound/FX_piano01.mp3");
+				playSound("C.wav");
 				   if (isRecording) {
 					   String pitchName = ((JButton) e.getSource()).getName();
 			           recordNote(pitchName);
@@ -170,54 +195,198 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 		panel.add(btnNewButton);
 		
 		JButton btnNewButton_2 = new JButton("");
+		btnNewButton_2.setName("E");
 		btnNewButton_2.setBounds(80, 6, 42, 107);
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				playSound("E.wav");
+				   if (isRecording) {
+					   String pitchName = ((JButton) e.getSource()).getName();
+			           recordNote(pitchName);
+			            System.out.printf("%s", pitchName);
+			        }
+			}
+
+			
+		});
 		panel.add(btnNewButton_2);
 		
 		JButton btnNewButton_1 = new JButton("");
+		btnNewButton_1.setName("D");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				playSound("D.wav");
+				   if (isRecording) {
+					   String pitchName = ((JButton) e.getSource()).getName();
+			           recordNote(pitchName);
+			            System.out.printf("%s", pitchName);
+			        }
+			}
+
+			
+		});
 		btnNewButton_1.setBounds(43, 6, 42, 107);
 		panel.add(btnNewButton_1);
 		
 		JButton blackKey3 = new JButton("");
+		blackKey3.setName("F#");
+		blackKey3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				playSound("F#.wav");
+				   if (isRecording) {
+					   String pitchName = ((JButton) e.getSource()).getName();
+			           recordNote(pitchName);
+			            System.out.printf("%s", pitchName);
+			        }
+			}
+
+			
+		});
 		blackKey3.setBounds(139, 6, 34, 73);
 		blackKey3.setIcon(new ImageIcon(GUI.class.getResource("/img/blackKey.png")));
 		panel.add(blackKey3);
 		
 		JButton btnNewButton_3 = new JButton("");
+		btnNewButton_3.setName("F");
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				playSound("F.wav");
+				   if (isRecording) {
+					   String pitchName = ((JButton) e.getSource()).getName();
+			           recordNote(pitchName);
+			            System.out.printf("%s", pitchName);
+			        }
 			}
+
+			
 		});
 		btnNewButton_3.setBounds(117, 6, 42, 107);
 		panel.add(btnNewButton_3);
 		
 		JButton blackKey4 = new JButton("");
+		blackKey4.setName("G#");
 		blackKey4.setBounds(177, 6, 34, 73);
 		blackKey4.setIcon(new ImageIcon(GUI.class.getResource("/img/blackKey.png")));
+		blackKey4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				playSound("G#.wav");
+				   if (isRecording) {
+					   String pitchName = ((JButton) e.getSource()).getName();
+			           recordNote(pitchName);
+			            System.out.printf("%s", pitchName);
+			        }
+			}
+
+			
+		});
+		
 		panel.add(blackKey4);
 		
 		JButton btnNewButton_1_2 = new JButton("");
+		btnNewButton_1_2.setName("G");
+		btnNewButton_1_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				playSound("G.wav");
+				   if (isRecording) {
+					   String pitchName = ((JButton) e.getSource()).getName();
+			           recordNote(pitchName);
+			            System.out.printf("%s", pitchName);
+			        }
+			}
+
+			
+		});
+		
 		btnNewButton_1_2.setBounds(154, 6, 42, 107);
 		panel.add(btnNewButton_1_2);
 		
 		JButton blackKey5 = new JButton("");
+		blackKey5.setName("A#");
 		blackKey5.setBounds(214, 6, 34, 73);
+		blackKey5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				playSound("A#.wav");
+				   if (isRecording) {
+					   String pitchName = ((JButton) e.getSource()).getName();
+			           recordNote(pitchName);
+			            System.out.printf("%s", pitchName);
+			        }
+			}
+
+			
+		});
 		blackKey5.setIcon(new ImageIcon(GUI.class.getResource("/img/blackKey.png")));
+		
 		panel.add(blackKey5);
 		
 		JButton btnNewButton_2_1 = new JButton("");
+		btnNewButton_2_1.setName("A");
+		btnNewButton_2_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				playSound("A.wav");
+				   if (isRecording) {
+					   String pitchName = ((JButton) e.getSource()).getName();
+			           recordNote(pitchName);
+			            System.out.printf("%s", pitchName);
+			        }
+			}
+
+			
+		});
 		btnNewButton_2_1.setBounds(191, 6, 42, 107);
 		panel.add(btnNewButton_2_1);
 		
 		JButton btnNewButton_2_1_1 = new JButton("");
+		btnNewButton_2_1_1.setName("B");
+		btnNewButton_2_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				playSound("B.wav");
+				   if (isRecording) {
+					   String pitchName = ((JButton) e.getSource()).getName();
+			           recordNote(pitchName);
+			            System.out.printf("%s", pitchName);
+			        }
+			}
+
+			
+		});
 		btnNewButton_2_1_1.setBounds(228, 6, 42, 107);
 		panel.add(btnNewButton_2_1_1);
 		
 		JButton blackKey6 = new JButton("");
+		blackKey6.setName("A");
+		btnNewButton_2_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				playSound("A.wav");
+				   if (isRecording) {
+					   String pitchName = ((JButton) e.getSource()).getName();
+			           recordNote(pitchName);
+			            System.out.printf("%s", pitchName);
+			        }
+			}
+
+			
+		});
 		blackKey6.setBounds(287, 6, 34, 73);
 		blackKey6.setIcon(new ImageIcon(GUI.class.getResource("/img/blackKey.png")));
 		panel.add(blackKey6);
 		
 		JButton btnNewButton_4 = new JButton("");
+		btnNewButton_4.setName("C2");
+		btnNewButton_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				playSound("C2.wav");
+				   if (isRecording) {
+					   String pitchName = ((JButton) e.getSource()).getName();
+			           recordNote(pitchName);
+			            System.out.printf("%s", pitchName);
+			        }
+			}
+
+			
+		});
+		
+		
 		btnNewButton_4.setBounds(265, 6, 42, 107);
 		panel.add(btnNewButton_4);
 		
@@ -354,7 +523,7 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 
     protected void playSound(String string) {
 		try {
-			URL soundUrl = getClass().getResource("/sound/beep.wav");
+			URL soundUrl = getClass().getResource("/sound/"+string);
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundUrl);
             Clip clip = AudioSystem.getClip();
             clip.open(audioInputStream);
@@ -413,7 +582,7 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 
 	            if (isRecording) {
 	                long timestamp = System.currentTimeMillis() - startTime;
-	                RecordedNote note = new RecordedNote(pitchName, timestamp, "/sound/beep.wav");
+	                RecordedNote note = new RecordedNote(pitchName, timestamp,"/sound/"+pitchName+".wav");
 	                recordedNotes.add(note);
 	                System.out.printf("%s", pitchName);
 	            } else {
@@ -426,7 +595,7 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 	 private void playButtonSound(ActionEvent e) {
 	        JButton clickedButton = (JButton) e.getSource();
 	        String pitchName = clickedButton.getName();
-	        playSound("wor/sound/FX_piano01.mp3"); // Adjust the sound file path accordingly
+	        playSound(pitchName+".wav"); // Adjust the sound file path accordingly
 	    }
 	 
 	 
@@ -450,26 +619,29 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 	    long timestamp = System.currentTimeMillis() - startTime;
 
 	    // Get the URL of the resource
-	    URL resourceUrl = getClass().getResource("/sound/beep.wav");
+	    
+//	    URL resourceUrl = getClass().getResource("/sound/beep.wav");
 
 	 
 
 
-	    if (resourceUrl == null) {
-	        System.out.println("Resource not found: tqtq/beep.wav");
-	        return;
-	    }
+//	    if (resourceUrl == null) {
+//	        System.out.println("Resource not found: tqtq/beep.wav");
+//	        return;
+//	    }
 
 	    // Convert the URL to a file path
-	    String filePath;
+//	    String filePath;
 //	    try {
 //	        filePath = Paths.get(resourceUrl.toURI()).toString();
 //	    } catch (URISyntaxException e) {
 //	        e.printStackTrace();
 //	        return;
 //	    }
+	    String soundFile = "/sound/" + pitch + ".wav";
+	    RecordedNote note = new RecordedNote(pitch, timestamp, soundFile);
 
-	    RecordedNote note = new RecordedNote(pitch, timestamp, "/sound/beep.wav");
+//	    RecordedNote note = new RecordedNote(pitch, timestamp, "/sound/beep.wav");
 //	    System.out.println(filePath);
 	    recordedNotes.add(note);
 	}
@@ -544,7 +716,7 @@ public class Piano extends JFrame implements ActionListener, MetronomeListener {
 
 	            // Continue with the rest of your code for playing the sound...
 	            // ...
-	            playSound(note.soundFile);
+	            playSound(note.pitch+".wav");
 
 	        } catch (UnsupportedAudioFileException | IOException | InterruptedException ex) {
 	            ex.printStackTrace();

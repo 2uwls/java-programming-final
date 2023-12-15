@@ -102,7 +102,7 @@ public class Metronome extends Thread {
     }
 
     public void setMetronomeListener(MetronomeListener listener) {
-        this.keepRunning = true;
+//        this.keepRunning = true;
         this.metronomeListener = listener;
     }
 
