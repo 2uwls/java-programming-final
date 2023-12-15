@@ -1,16 +1,14 @@
 import java.awt.EventQueue;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+
 import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
+
 import com.jgoodies.forms.factories.DefaultComponentFactory;
-import javax.swing.JButton;
+
 import java.awt.Color;
-import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
-import javax.swing.JTextField;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -30,8 +28,7 @@ import java.io.FileOutputStream;
 import java.io.PrintWriter;
 
 
-public class GUI extends JFrame {
-	private DrumGUI drumGUI;
+public class DrumGUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -39,12 +36,11 @@ public class GUI extends JFrame {
 	private JLabel bpmLabel;
 	//for note panel
 	private JButton[][] buttons;
-    private ImageIcon defaultImg = new ImageIcon(GUI.class.getResource("/img/pinoNoteBg1.png"));
-    private ImageIcon beginImg = new ImageIcon(GUI.class.getResource("/img/pinoNoteBgBegin.png"));
+    private ImageIcon defaultImg = new ImageIcon(DrumGUI.class.getResource("/img/pinoNoteBg1.png"));
+    private ImageIcon beginImg = new ImageIcon(DrumGUI.class.getResource("/img/pinoNoteBgBegin.png"));
     private String[] clickedButtons = {"  ", "  ", "  ", "  ", "  ", "  ","  ","  ","  ","  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ","  ","  ","  ","  ", "  ", "  ", "  ", "  ","  ","  ","  ","  ", };
 	private JTextArea textArea;
-	private String[] labels = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B", 
-            "C2"};
+	private String[] labels = {"hihat", "kick", "percu", "snare"};
 
 
 
@@ -55,7 +51,7 @@ public class GUI extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GUI frame = new GUI();
+					DrumGUI frame = new DrumGUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -67,9 +63,7 @@ public class GUI extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public GUI() {
-		
-		drumGUI = new DrumGUI();
+	public DrumGUI() {
 		
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -80,7 +74,7 @@ public class GUI extends JFrame {
 		contentPane.setLayout(null);
 		setContentPane(contentPane);
         
-		JLabel lblNewJgoodiesLabel = DefaultComponentFactory.getInstance().createLabel("Get a Piano");
+		JLabel lblNewJgoodiesLabel = DefaultComponentFactory.getInstance().createLabel("Get a Drum");
 		lblNewJgoodiesLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		lblNewJgoodiesLabel.setForeground(Color.BLACK);
 		lblNewJgoodiesLabel.setBounds(381, 6, 113, 28);
@@ -120,14 +114,30 @@ public class GUI extends JFrame {
 		
 		
 		JPanel panel_2 = new JPanel();
-		panel_2.setBounds(37, 143, 698, 272);
+		panel_2.setBounds(100, 143, 635, 272);
 		contentPane.add(panel_2);
 		panel_2.setLayout(null);
 		
 		JPanel panel_3 = new JPanel();
-		panel_3.setBounds(16, 143, 19, 272);
+		panel_3.setBounds(16, 143, 83, 272);
 		contentPane.add(panel_3);
-		panel_3.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		panel_3.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		JLabel hihtatLabel = new JLabel("");
+		hihtatLabel.setIcon(new ImageIcon(DrumGUI.class.getResource("/img/hihat.png")));
+		panel_3.add(hihtatLabel);
+		
+		JLabel kickLabel = new JLabel("");
+		kickLabel.setIcon(new ImageIcon(DrumGUI.class.getResource("/img/kick.png")));
+		panel_3.add(kickLabel);
+		
+		JLabel percuLabel = new JLabel("");
+		percuLabel.setIcon(new ImageIcon(DrumGUI.class.getResource("/img/percu.png")));
+		panel_3.add(percuLabel);
+		
+		JLabel snareLabel = new JLabel("");
+		snareLabel.setIcon(new ImageIcon(DrumGUI.class.getResource("/img/snare.png")));
+		panel_3.add(snareLabel);
 		
 		JPanel panel_4 = new JPanel();
 		panel_4.setBounds(16, 59, 719, 82);
@@ -137,6 +147,7 @@ public class GUI extends JFrame {
 		textArea = new JTextArea();
 		textArea.setBounds(6, 5, 711, 71);
 		panel_4.add(textArea);
+
 		
 		JPanel panel_5 = new JPanel();
 		panel_5.setBackground(Color.WHITE);
@@ -216,19 +227,17 @@ public class GUI extends JFrame {
 		    }
 		});
 
-		for (String label : labels) {
-		 panel_3.add(DefaultComponentFactory.getInstance().createLabel(label));
-		}
+		
 		
 		// Create buttons array
-        buttons = new JButton[32][13];
+        buttons = new JButton[32][4];
         
         int buttonWidth = panel_2.getWidth() / 32;
-        int buttonHeight = panel_2.getHeight() / 13;
+        int buttonHeight = panel_2.getHeight() / 4;
 
      // Populate buttons in panel_2
         for (int col = 0; col < 32; col++) {
-            for (int row = 0; row < 13; row++) {
+            for (int row = 0; row < 4; row++) {
                 buttons[col][row] = createButton(col, row, buttonWidth, buttonHeight);
                 panel_2.add(buttons[col][row]);
                 //buttons[col][row].addActionListener(e -> handlePanel2ButtonClick(col, row));
@@ -283,7 +292,7 @@ public class GUI extends JFrame {
 	// Add a method to enable/disable panel_2 buttons
 	private void setPanel2ButtonsEnabled(boolean enabled) {
 	    for (int col = 0; col < 32; col++) {
-	        for (int row = 0; row < 13; row++) {
+	        for (int row = 0; row < 4; row++) {
 	            buttons[col][row].setEnabled(enabled);
 	        }
 	    }
@@ -417,7 +426,7 @@ public class GUI extends JFrame {
 
 
 
+	
+	
 
-	
-	
 	
